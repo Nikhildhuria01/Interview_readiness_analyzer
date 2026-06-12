@@ -4,45 +4,84 @@ import pandas as pd
 from resume_parser import extract_resume_skills
 from job_parser import extract_job_skills
 from skill_gap import compare_skills
-from question_recommender import get_questions
-from question_generator import generate_questions
+
+from question_recommender import (
+    get_role_questions,
+    get_existing_skill_questions,
+    get_missing_skill_questions,
+)
+
+from readiness_score import calculate_score
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 
-resumes = pd.read_csv(
-    BASE_DIR / "data/processed/tech_resumes.csv"
-)
+# ==========================================
+# LOAD DATASETS
+# ==========================================
 
-jobs = pd.read_csv(
-    BASE_DIR / "data/processed/tech_jobs.csv"
-)
+resumes = pd.read_csv(BASE_DIR / "data/processed/tech_resumes.csv")
+
+jobs = pd.read_csv(BASE_DIR / "data/processed/tech_jobs.csv")
+
+# ==========================================
+# SELECT RESUME
+# ==========================================
 
 resume_text = resumes.iloc[0]["Resume_str"]
 
-job_text = jobs[
-    jobs["Job Title"] == "DevOps Engineer"
-].iloc[0]["Job Description"]
+# ==========================================
+# SELECT JOB ROLE
+# ==========================================
 
-resume_skills = extract_resume_skills(
-    resume_text
-)
+target_role = "Software Engineer"
 
-job_skills = extract_job_skills(
-    job_text
-)
+job_text = jobs[jobs["Job Title"] == target_role].iloc[0]["Job Description"]
 
-matched, missing = compare_skills(
-    resume_skills,
-    job_skills
-)
-questions = generate_questions(
-    missing
-)
+# ==========================================
+# EXTRACT SKILLS
+# ==========================================
 
-print("\nRecommended Questions:")
+resume_skills = extract_resume_skills(resume_text)
 
-for q in questions:
-    print("-", q)
+job_skills = extract_job_skills(job_text)
+
+# ==========================================
+# SKILL GAP ANALYSIS
+# ==========================================
+
+matched, missing = compare_skills(resume_skills, job_skills)
+
+# ==========================================
+# READINESS SCORE
+# ==========================================
+
+score = calculate_score(matched, job_skills)
+
+# ==========================================
+# QUESTION GENERATION
+# ==========================================
+
+role_questions = get_role_questions(target_role, n=5)
+
+existing_skill_questions = get_existing_skill_questions(resume_skills)
+
+missing_skill_questions = get_missing_skill_questions(missing)
+
+# ==========================================
+# FINAL REPORT
+# ==========================================
+
+print("\n")
+print("=" * 50)
+print("INTERVIEW READINESS REPORT")
+print("=" * 50)
+
+print("\nTarget Role:")
+print(target_role)
+
+print("\nReadiness Score:")
+print(score, "%")
+
 print("\nResume Skills:")
 print(resume_skills)
 
@@ -54,3 +93,27 @@ print(matched)
 
 print("\nMissing Skills:")
 print(missing)
+
+print("\n")
+print("=" * 50)
+print("ROLE BASED QUESTIONS")
+print("=" * 50)
+
+for q in role_questions:
+    print("-", q)
+
+print("\n")
+print("=" * 50)
+print("EXISTING SKILL QUESTIONS")
+print("=" * 50)
+
+for q in existing_skill_questions:
+    print("-", q)
+
+print("\n")
+print("=" * 50)
+print("MISSING SKILL QUESTIONS")
+print("=" * 50)
+
+for q in missing_skill_questions:
+    print("-", q)
