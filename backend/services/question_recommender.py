@@ -3,10 +3,26 @@ import pandas as pd
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 
-questions = pd.read_csv(BASE_DIR / "data/processed/master_question_bank.csv")
+questions_df = pd.read_csv(
+    BASE_DIR /
+    "data/raw/full_interview_questions_dataset.csv",
+    encoding="latin1"
+)
 
-print("\nTotal Questions:")
-print(len(questions))
+def get_questions(
+    role,
+    n=10
+):
 
-print("\nAvailable Roles:")
-print(questions["role"].dropna().unique()[:20])
+    role_questions = questions_df[
+        questions_df["role"]
+        .str.lower()
+        ==
+        role.lower()
+    ]
+
+    return (
+        role_questions["question"]
+        .head(n)
+        .tolist()
+    )

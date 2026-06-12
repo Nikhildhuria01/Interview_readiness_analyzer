@@ -4,6 +4,7 @@ import pandas as pd
 from resume_parser import extract_resume_skills
 from job_parser import extract_job_skills
 from skill_gap import compare_skills
+from question_recommender import get_questions
 from question_generator import generate_questions
 
 BASE_DIR = Path(__file__).resolve().parents[2]
