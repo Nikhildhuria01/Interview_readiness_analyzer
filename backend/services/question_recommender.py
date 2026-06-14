@@ -86,12 +86,29 @@ SKILL_QUESTIONS = {
         "What is data cleaning?",
     ],
 }
+# ==================================================
+# GENERIC QUESTIONS FOR UNKNOWN SKILLS
+# ==================================================
+
+def generate_generic_questions(skill):
+
+    return [
+
+        f"What is {skill}?",
+
+        f"What are the key features of {skill}?",
+
+        f"Where is {skill} commonly used?",
+
+        f"What are the advantages of {skill}?",
+
+        f"Explain a real-world project using {skill}?"
+    ]
 
 
 # ==================================================
 # EXISTING SKILL QUESTIONS
 # ==================================================
-
 
 def get_existing_skill_questions(skills):
 
@@ -101,7 +118,15 @@ def get_existing_skill_questions(skills):
 
         if skill in SKILL_QUESTIONS:
 
-            questions.extend(SKILL_QUESTIONS[skill][:2])
+            questions.extend(
+                SKILL_QUESTIONS[skill][:2]
+            )
+
+        else:
+
+            questions.extend(
+                generate_generic_questions(skill)[:2]
+            )
 
     return questions
 
@@ -109,7 +134,6 @@ def get_existing_skill_questions(skills):
 # ==================================================
 # MISSING SKILL QUESTIONS
 # ==================================================
-
 
 def get_missing_skill_questions(skills):
 
@@ -119,6 +143,15 @@ def get_missing_skill_questions(skills):
 
         if skill in SKILL_QUESTIONS:
 
-            questions.extend(SKILL_QUESTIONS[skill])
+            questions.extend(
+                SKILL_QUESTIONS[skill]
+            )
+
+        else:
+
+            questions.extend(
+                generate_generic_questions(skill)
+            )
 
     return questions
+

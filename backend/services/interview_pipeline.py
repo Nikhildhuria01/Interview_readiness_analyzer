@@ -27,7 +27,16 @@ jobs = pd.read_csv(BASE_DIR / "data/processed/tech_jobs.csv")
 # SELECT RESUME
 # ==========================================
 
-resume_text = resumes.iloc[0]["Resume_str"]
+from pdf_parser import extract_text_from_pdf
+
+pdf_path = (
+    BASE_DIR /
+    "data/resumes/testresume.pdf"
+)
+
+resume_text = extract_text_from_pdf(
+    pdf_path
+)
 
 # ==========================================
 # SELECT JOB ROLE
