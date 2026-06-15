@@ -176,7 +176,6 @@ def get_existing_skill_questions(skills):
 
                 generated = get_generated_questions(skill)
 
-    questions.extend(generated)
     return questions
 
 

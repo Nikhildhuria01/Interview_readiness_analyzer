@@ -1,6 +1,11 @@
 from pathlib import Path
+import sys
 import pandas as pd
 
+BASE_DIR = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from resume_upload.pdf_parser import extract_text_from_pdf
 from resume_parser import extract_resume_skills
 from job_parser import extract_job_skills
 from skill_gap import compare_skills
@@ -19,15 +24,17 @@ BASE_DIR = Path(__file__).resolve().parents[2]
 # LOAD DATASETS
 # ==========================================
 
-resumes = pd.read_csv(BASE_DIR / "data/processed/tech_resumes.csv")
-
 jobs = pd.read_csv(BASE_DIR / "data/processed/tech_jobs.csv")
 
 # ==========================================
 # SELECT RESUME
 # ==========================================
 
-resume_text = resumes.iloc[0]["Resume_str"]
+pdf_path = BASE_DIR / "data/resumes/rss.pdf"
+if not pdf_path.exists():
+    raise FileNotFoundError(f"Resume file not found: {pdf_path}")
+
+resume_text = extract_text_from_pdf(pdf_path)
 
 # ==========================================
 # SELECT JOB ROLE
