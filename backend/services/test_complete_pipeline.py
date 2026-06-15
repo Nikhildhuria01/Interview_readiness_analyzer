@@ -1,14 +1,10 @@
 from pathlib import Path
-import sys
-import pandas as pd
 
-BASE_DIR = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-
-from backend.services.pdf_parser import extract_text_from_pdf
+from pdf_parser import extract_text_from_pdf
 from resume_parser import extract_resume_skills
 from job_parser import extract_job_skills
 from skill_gap import compare_skills
+from readiness_score import calculate_score
 
 from question_recommender import (
     get_role_questions,
@@ -16,41 +12,41 @@ from question_recommender import (
     get_missing_skill_questions,
 )
 
-from readiness_score import calculate_score
+from report_generator import generate_report
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 
 # ==========================================
-# LOAD DATASETS
-# ==========================================
-
-jobs = pd.read_csv(BASE_DIR / "data/processed/tech_jobs.csv")
-
-# ==========================================
-# SELECT RESUME
+# LOAD RESUME PDF
 # ==========================================
 
 pdf_path = BASE_DIR / "data/resumes/rss.pdf"
-if not pdf_path.exists():
-    raise FileNotFoundError(f"Resume file not found: {pdf_path}")
 
 resume_text = extract_text_from_pdf(pdf_path)
 
 # ==========================================
-# SELECT JOB ROLE
+# TEST JOB DESCRIPTION
 # ==========================================
 
-target_role = "Software Engineer"
+job_description = """
+Software Engineer
 
-job_text = jobs[jobs["Job Title"] == target_role].iloc[0]["Job Description"]
+Required Skills:
+
+Python
+Git
+Linux
+Docker
+Jenkins
+"""
 
 # ==========================================
-# EXTRACT SKILLS
+# SKILL EXTRACTION
 # ==========================================
 
 resume_skills = extract_resume_skills(resume_text)
 
-job_skills = extract_job_skills(job_text)
+job_skills = extract_job_skills(job_description)
 
 # ==========================================
 # SKILL GAP ANALYSIS
@@ -65,29 +61,22 @@ matched, missing = compare_skills(resume_skills, job_skills)
 score = calculate_score(matched, job_skills)
 
 # ==========================================
-# QUESTION GENERATION
+# QUESTIONS
 # ==========================================
 
-role_questions = get_role_questions(target_role, n=5)
+role_questions = get_role_questions("Software Engineer")
 
-existing_skill_questions = get_existing_skill_questions(resume_skills)
+existing_questions = get_existing_skill_questions(matched)
 
-missing_skill_questions = get_missing_skill_questions(missing)
+missing_questions = get_missing_skill_questions(missing)
 
 # ==========================================
-# FINAL REPORT
+# OUTPUT
 # ==========================================
 
-print("\n")
-print("=" * 50)
+print("\n" + "=" * 60)
 print("INTERVIEW READINESS REPORT")
-print("=" * 50)
-
-print("\nTarget Role:")
-print(target_role)
-
-print("\nReadiness Score:")
-print(score, "%")
+print("=" * 60)
 
 print("\nResume Skills:")
 print(resume_skills)
@@ -101,26 +90,33 @@ print(matched)
 print("\nMissing Skills:")
 print(missing)
 
-print("\n")
-print("=" * 50)
-print("ROLE BASED QUESTIONS")
-print("=" * 50)
+print(f"\nReadiness Score: {score:.2f}%")
 
-for q in role_questions:
+print("\nROLE QUESTIONS")
+for q in role_questions[:5]:
     print("-", q)
 
-print("\n")
-print("=" * 50)
-print("EXISTING SKILL QUESTIONS")
-print("=" * 50)
-
-for q in existing_skill_questions:
+print("\nMATCHED SKILL QUESTIONS")
+for q in existing_questions[:10]:
     print("-", q)
 
-print("\n")
-print("=" * 50)
-print("MISSING SKILL QUESTIONS")
-print("=" * 50)
-
-for q in missing_skill_questions:
+print("\nMISSING SKILL QUESTIONS")
+for q in missing_questions[:10]:
     print("-", q)
+
+# ==========================================
+# PDF REPORT
+# ==========================================
+
+generate_report(
+    role="Software Engineer",
+    readiness_score=score,
+    resume_skills=resume_skills,
+    matched=matched,
+    missing=missing,
+    role_questions=role_questions,
+    missing_questions=missing_questions,
+)
+
+print("\nPDF REPORT GENERATED")
+print("=" * 60)

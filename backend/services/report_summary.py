@@ -7,14 +7,27 @@ load_dotenv()
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 
-def generate_online_questions(skill):
+def generate_summary(role, score, matched, missing):
 
     prompt = f"""
-    Generate 5 technical interview questions
-    for {skill}.
+    Role: {role}
 
-    Return only the questions.
-    One question per line.
+    Readiness Score: {score}
+
+    Matched Skills:
+    {matched}
+
+    Missing Skills:
+    {missing}
+
+    Generate:
+
+    1. Strengths
+    2. Weaknesses
+    3. Recommended Learning Path
+    4. Final Assessment
+
+    Keep it professional.
     """
 
     response = client.chat.completions.create(
