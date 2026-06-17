@@ -1,6 +1,6 @@
 from pathlib import Path
 import pandas as pd
-from online_question_generator import generate_online_questions
+
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 
@@ -186,6 +186,7 @@ def get_existing_skill_questions(skills):
 
 def get_missing_skill_questions(skills):
 
+    from online_question_generator import generate_online_questions
     questions = []
 
     for skill in skills:
