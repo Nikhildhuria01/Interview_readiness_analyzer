@@ -31,3 +31,4 @@ mlruns/
 
 # Temporary Files
 temp_resume.pdf.env
+.env
