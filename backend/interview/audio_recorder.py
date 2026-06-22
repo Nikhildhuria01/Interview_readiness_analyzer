@@ -1,31 +1,35 @@
 import sounddevice as sd
 from scipy.io.wavfile import write
 
-DURATION = 15
 
-SAMPLE_RATE = 44100
+def record_answer(
+    filename,
+    duration=10
+):
 
-print(
-    "Recording Started..."
-)
+    SAMPLE_RATE = 44100
 
-recording = sd.rec(
-    int(
-        DURATION * SAMPLE_RATE
-    ),
-    samplerate=SAMPLE_RATE,
-    channels=1,
-    dtype="int16"
-)
+    print(
+        "\nRecording Started..."
+    )
 
-sd.wait()
+    recording = sd.rec(
+        int(
+            duration * SAMPLE_RATE
+        ),
+        samplerate=SAMPLE_RATE,
+        channels=1,
+        dtype="int16"
+    )
 
-write(
-    "backend/interview/interview_audio.wav",
-    SAMPLE_RATE,
-    recording
-)
+    sd.wait()
 
-print(
-    "Recording Saved!"
-)
+    write(
+        filename,
+        SAMPLE_RATE,
+        recording
+    )
+
+    print(
+        f"Recording Saved: {filename}"
+    )

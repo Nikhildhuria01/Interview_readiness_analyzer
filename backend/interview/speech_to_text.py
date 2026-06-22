@@ -1,40 +1,20 @@
 import whisper
 
-print(
-    "Loading Whisper Model..."
-)
+print("Loading Whisper Model Once...")
 
-model = whisper.load_model(
-    "base"
-)
+model = whisper.load_model("tiny")
 
-print(
-    "Converting Speech To Text..."
-)
+print("Whisper Ready!")
 
-result = model.transcribe(
-    "backend/interview/interview_audio.wav"
-)
 
-transcript = result["text"]
+def generate_transcript(audio_file, transcript_file):
 
-with open(
-    "backend/interview/transcript.txt",
-    "w"
-) as f:
+    result = model.transcribe(audio_file)
 
-    f.write(
-        transcript
-    )
+    transcript = result["text"]
 
-print(
-    "\nTranscript Generated Successfully!"
-)
+    with open(transcript_file, "w", encoding="utf-8") as f:
 
-print(
-    "\nTranscript:"
-)
+        f.write(transcript)
 
-print(
-    transcript
-)
+    return transcript
