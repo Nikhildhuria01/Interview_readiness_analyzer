@@ -1,1 +1,0 @@
- BCS is a elastic container service and E cases elastic cubanet service which are the two main
