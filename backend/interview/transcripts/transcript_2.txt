@@ -1,1 +1,1 @@
- the difference is C and K.
+ Pitan decorators are basically a design pattern which allows you to modify or it's

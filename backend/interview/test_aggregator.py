@@ -8,14 +8,16 @@ score = calculate_overall_score(
 
     correctness_score=90,
 
-    eye_contact_score=82,
+    eye_contact_score=80,
 
     posture_score=88,
 
-    head_stability_score=91
+    head_stability_score=82,
+
+    confidence_score=86
 
 )
 
 print(
-    f"Overall Interview Score: {score}"
+    f"Overall Score: {score}"
 )

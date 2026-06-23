@@ -1,1 +1,1 @@
- Docker is a containerization platform.
+ Config Maps Config Maps Is a native Kubernetes API open?

@@ -1,18 +1,40 @@
-import json
+def calculate_overall_score(
 
+    fluency_score,
 
-def save_features(eye_contact, posture, stability, fluency, correctness):
+    correctness_score,
 
-    data = {
-        "eye_contact": eye_contact,
-        "posture": posture,
-        "stability": stability,
-        "fluency": fluency,
-        "correctness": correctness,
-    }
+    eye_contact_score,
 
-    with open("backend/interview/interview_features.json", "w") as f:
+    posture_score,
 
-        json.dump(data, f, indent=4)
+    head_stability_score
 
-    print("\nFeatures Saved Successfully!")
+):
+
+    overall_score = (
+
+        fluency_score * 0.25
+
+        +
+
+        correctness_score * 0.40
+
+        +
+
+        eye_contact_score * 0.15
+
+        +
+
+        posture_score * 0.10
+
+        +
+
+        head_stability_score * 0.10
+
+    )
+
+    return round(
+        overall_score,
+        2
+    )

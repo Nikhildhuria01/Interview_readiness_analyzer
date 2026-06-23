@@ -3,126 +3,131 @@ import time
 import json
 
 from eye_contact_analysis import get_eye_contact_score
-
 from posture_analysis import get_posture_score
-
 from head_stability import get_head_stability_score
 
-cap = cv2.VideoCapture(0)
 
-print("Mock Interview Started...")
+def run_camera_interview():
 
-print("Camera will stop automatically after 60 seconds.")
+    cap = cv2.VideoCapture(0)
 
-start_time = time.time()
+    print("Mock Interview Started...")
+    print("Camera will stop automatically after 60 seconds.")
 
-eye_scores = []
-posture_scores = []
-stability_scores = []
+    start_time = time.time()
 
-while True:
+    eye_scores = []
+    posture_scores = []
+    stability_scores = []
 
-    if time.time() - start_time > 60:
+    while True:
 
-        print("\nInterview Session Completed.")
+        if time.time() - start_time > 60:
 
-        break
+            print("\nInterview Session Completed.")
+            break
 
-    ret, frame = cap.read()
+        ret, frame = cap.read()
 
-    if not ret:
-        break
+        if not ret:
+            break
 
-    eye_score = get_eye_contact_score(frame)
+        eye_score = get_eye_contact_score(frame)
 
-    posture_score = get_posture_score(frame)
+        posture_score = get_posture_score(frame)
 
-    stability_score = get_head_stability_score(frame)
+        stability_score = get_head_stability_score(frame)
 
-    eye_scores.append(eye_score)
+        eye_scores.append(eye_score)
 
-    posture_scores.append(posture_score)
+        posture_scores.append(posture_score)
 
-    stability_scores.append(stability_score)
+        stability_scores.append(stability_score)
 
-    cv2.putText(
-        frame,
-        f"Eye Contact: {eye_score}",
-        (20, 40),
-        cv2.FONT_HERSHEY_SIMPLEX,
-        0.8,
-        (0, 0, 0),
-        2,
+        cv2.putText(
+            frame,
+            f"Eye Contact: {eye_score}",
+            (20, 40),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.8,
+            (0, 0, 0),
+            2,
+        )
+
+        cv2.putText(
+            frame,
+            f"Posture: {posture_score}",
+            (20, 80),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.8,
+            (0, 0, 0),
+            2,
+        )
+
+        cv2.putText(
+            frame,
+            f"Head Stability: {stability_score}",
+            (20, 120),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.8,
+            (0, 0, 0),
+            2,
+        )
+
+        cv2.imshow("AI Mock Interview", frame)
+
+        key = cv2.waitKey(1)
+
+        if key == ord("q") or key == 27:
+
+            print("\nStopped Manually.")
+            break
+
+    cap.release()
+    cv2.destroyAllWindows()
+
+    avg_eye_contact = (
+        round(sum(eye_scores) / len(eye_scores), 2)
+        if eye_scores else 0
     )
 
-    cv2.putText(
-        frame,
-        f"Posture: {posture_score}",
-        (20, 80),
-        cv2.FONT_HERSHEY_SIMPLEX,
-        0.8,
-        (0, 0, 0),
-        2,
+    avg_posture = (
+        round(sum(posture_scores) / len(posture_scores), 2)
+        if posture_scores else 0
     )
 
-    cv2.putText(
-        frame,
-        f"Head Stability: {stability_score}",
-        (20, 120),
-        cv2.FONT_HERSHEY_SIMPLEX,
-        0.8,
-        (0, 0, 0),
-        2,
+    avg_stability = (
+        round(sum(stability_scores) / len(stability_scores), 2)
+        if stability_scores else 0
     )
 
-    cv2.imshow("AI Mock Interview", frame)
+    print("\nFinal Scores")
+    print(f"Eye Contact: {avg_eye_contact}")
+    print(f"Posture: {avg_posture}")
+    print(f"Head Stability: {avg_stability}")
 
-    key = cv2.waitKey(1)
+    features = {
+        "eye_contact": avg_eye_contact,
+        "posture": avg_posture,
+        "head_stability": avg_stability,
+    }
 
-    if key == ord("q") or key == 27:
+    with open(
+        "backend/interview/interview_features.json",
+        "w"
+    ) as f:
 
-        print("\nStopped Manually.")
+        json.dump(
+            features,
+            f,
+            indent=4
+        )
 
-        break
+    print("\nFeatures Saved Successfully!")
 
-cap.release()
+    return features
 
-cv2.destroyAllWindows()
 
-# ==========================
-# FINAL AVERAGE SCORES
-# ==========================
+if __name__ == "__main__":
 
-avg_eye_contact = round(sum(eye_scores) / len(eye_scores), 2) if eye_scores else 0
-
-avg_posture = (
-    round(sum(posture_scores) / len(posture_scores), 2) if posture_scores else 0
-)
-
-avg_stability = (
-    round(sum(stability_scores) / len(stability_scores), 2) if stability_scores else 0
-)
-
-print("\nFinal Scores")
-
-print(f"Eye Contact: {avg_eye_contact}")
-
-print(f"Posture: {avg_posture}")
-
-print(f"Head Stability: {avg_stability}")
-
-# ==========================
-# SAVE FEATURES
-# ==========================
-
-features = {
-    "eye_contact": avg_eye_contact,
-    "posture": avg_posture,
-    "head_stability": avg_stability,
-}
-
-with open("backend/interview/interview_features.json", "w") as f:
-
-    json.dump(features, f, indent=4)
-
-print("\nFeatures Saved Successfully!")
+    run_camera_interview()
