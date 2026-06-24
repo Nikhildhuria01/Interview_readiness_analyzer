@@ -1,90 +1,90 @@
 {
-    "average_fluency": 99.5,
-    "average_correctness": 21.2,
-    "eye_contact_score": 87.05,
-    "posture_score": 71.58,
-    "head_stability_score": 65.11,
-    "overall_score": 60.08,
+    "average_fluency": 92.5,
+    "average_correctness": 23.2,
+    "eye_contact_score": 87.23,
+    "posture_score": 69.82,
+    "head_stability_score": 62.59,
+    "overall_score": 58.73,
     "questions": [
         {
-            "question": "What is EC2?",
-            "candidate_answer": " So, we are going to load the same thing. So, we are going to load the same thing. Easy to easy to. So, elastic communication. Elastic cloud computing something something. Use by Amazon AWS AWS AWS. So, we are going to load the same thing.",
-            "ideal_answer": "EC2 stands for Elastic Compute Cloud, which is a web service offered by Amazon Web Services (AWS) that provides scalable and secure virtual servers in the cloud, allowing businesses to scale their computing resources up or down to meet changing needs.",
-            "fluency_score": 95,
-            "correctness_score": 10,
-            "feedback": "The candidate failed to provide a clear and concise definition of EC2, and their answer was filled with filler words and unclear statements, indicating a lack of understanding of the topic."
-        },
-        {
-            "question": "How do you configure and manage Jenkins agents, including setting up agent nodes and allocating jobs to them?",
-            "candidate_answer": " \u0648\u06c1 \u062c\u0633\u062a\u0627\u060c \u06a9\u06c1 \u0628\u0644\u0627 240\u5206\u9418 \u06a9\u06cc \u0628\u0627 ikke \u062dunku kimse \u06cc\u06c1 \u067e \u067e\u0633\u0644\u0642\u0648\u0634\u0646\u7121\u06d2 \u06a9\u06cc\u061f",
-            "ideal_answer": "Here's a concise technical interview answer:\n\n**Configuring and Managing Jenkins Agents:**\n\nTo configure and manage Jenkins agents, I follow these steps:\n\n1. **Create Agent Nodes:** In the Jenkins UI, navigate to \"Manage Jenkins\" > \"Configure System.\" Click \"Add a new node\" and specify the node's name, description, and details. You can also configure the node's JVM settings and other advanced options.\n\n2. **Configure Agent Templates:** Agent templates allow you to create a pre-configured environment for new agent nodes. You can create a template with default settings and then apply it to new nodes.\n\n3. **Assign Jobs to Agent Nodes:** In the \"Job\" configuration, you can specify which agent nodes should run the job. You can also use the \"Label\" feature to assign jobs to specific label-based agent nodes.\n\n4. **Use Jenkinsfile to Allocate Jobs to Agent Nodes:** In Jenkins Declarative Pipeline, you can use the `agent` directive in the Jenkinsfile to specify which agent node should run the pipeline.\n\n5. **Monitor and Maintain Agent Nodes:** Regularly check agent node statuses, CPU usage, memory usage, and disk space to ensure optimal performance.\n\nBy following these steps, I can efficiently configure, manage, and troubleshoot Jenkins agents to ensure smooth execution of builds and deployments.",
+            "question": "Describe a conflict in your team and how you handled it.",
+            "candidate_answer": "",
+            "ideal_answer": "\"In a recent project, our team faced a conflict between two developers, John and Sarah, who had differing opinions on the best approach to implement a complex algorithm. The tension arose due to a tight deadline and competing priorities.\n\nTo resolve the conflict, I followed these steps:\n\n1. **Identified the issue**: I talked to both John and Sarah individually to understand their perspectives and concerns.\n2. **Clarified the goals**: I ensured that both developers were aligned with the project's objectives and the requirements.\n3. **Defined the key factors**: We broke down the complex algorithm into smaller components and identified the key factors influencing the project timeline.\n4. **Collaborative solution**: We worked together to find a compromise that merged both developers' ideas, incorporating the pros of each approach.\n5. **Set boundaries and timelines**: We established clear roles, responsibilities, and timelines for each developer to minimize misunderstandings and maximize productivity.\n\nBy actively listening, clarifying expectations, and fostering a collaborative environment, we managed to resolve the conflict efficiently and deliver the project on time.\"",
             "fluency_score": 100,
-            "correctness_score": 0,
-            "feedback": "The candidate's answer is completely unrelated to the question and does not demonstrate any understanding of Jenkins agent configuration and management."
+            "correctness_score": 60,
+            "feedback": "The candidate provided a clear narrative of a conflict resolution experience, but lacked technical details and specific examples to support their claims, resulting in a lower score in Technical Accuracy and Completeness."
         },
         {
             "question": "What is Docker?",
-            "candidate_answer": " to get moreBS talk are you don't know his will",
-            "ideal_answer": "Docker is an open-source containerization platform that enables developers to package, ship, and run applications in containers. These containers are lightweight, portable, and isolated environments that include the application and its dependencies, allowing for consistent and predictable behavior across different environments and infrastructure.",
-            "fluency_score": 100,
-            "correctness_score": 0,
-            "feedback": "The candidate's answer is completely off-topic and does not demonstrate any understanding of the question, indicating a lack of technical knowledge and preparation."
-        },
-        {
-            "question": "How do you handle deployment rollbacks in a CI/CD pipeline, and what strategies can you use to minimize downtime during the rollback process?",
             "candidate_answer": "",
-            "ideal_answer": "To handle deployment rollbacks in a CI/CD pipeline, I would implement the following strategies:\n\n1. **Use a Git commit hash-based deployment**: Store the Git commit hash associated with each deployment. This allows for a quick and deterministic rollback to a previous version by using the Git commit hash.\n\n2. **Maintain a version history**: Track all deployments and their associated version numbers or commit hashes. This provides a clear audit trail and enables easy rollbacks.\n\n3. **Implement a canary release strategy**: Gradually roll out new code to a small subset of users before rolling out to all users. This allows for quick detection and rollback in case of issues.\n\n4. **Use an Argo Rollouts or Blue-Green deployment strategy**: These strategies involve having two identical environments (e.g., dev and prod) where deployments are done to one environment while traffic is routed to the other. Once the deployment is verified, traffic is redirected to the new environment.\n\n5. **Automate rollbacks**: Use scripts and automation tools (e.g., Jenkins, Ansible) to quickly roll back to a previous version in case of issues.\n\nTo minimize downtime during the rollback process, I would:\n\n1. **Design the pipeline for fast rollbacks**: Use caching, store pre-built artifacts, and utilize efficient scripts to minimize deployment time.\n\n2. **Implement a Zero-Downtime Rolling Update approach**: Roll out new code to a new environment while the old environment remains online, allowing for seamless traffic routing.\n\n3. **Use a load balancer**: Redirect traffic to the old environment during the rollback process to minimize downtime.\n\n4. **Monitor and alert**: Continuously monitor the system during deployments and rollbacks, and have alerting mechanisms in place to quickly detect and address issues.\n\nBy implementing these strategies, downtime during deployment rollbacks can be minimized, and the overall reliability of the system can be improved.",
-            "fluency_score": 100,
-            "correctness_score": 42,
-            "feedback": "The candidate provided some relevant strategies for handling deployment rollbacks, but their answer lacked technical accuracy and completeness, and failed to address some key strategies mentioned in the ideal answer."
-        },
-        {
-            "question": "What is a Pod?",
-            "candidate_answer": "",
-            "ideal_answer": "A Pod in Kubernetes is a logical host for one or more Containers. It is a single, self-contained execution environment for the containers it runs. Pods are the basic execution unit in a Kubernetes cluster. They can have one or more containers, and they share the same resources such as network and storage. Pods are ephemeral and can be created, scaled, and deleted as needed, making it easy to manage and orchestrate application deployments.",
+            "ideal_answer": "Docker is an open-source containerization platform that allows developers to package, ship, and run applications in containers. It provides a lightweight and portable way to deploy applications by virtualizing the operating system and its dependencies, enabling consistent and reliable execution across different environments and infrastructure. Containers in Docker share the host operating system, reducing the overhead of traditional virtualization and increasing efficiency.",
             "fluency_score": 100,
             "correctness_score": 40,
-            "feedback": "The candidate provided a good start, but lacked details on the ephemeral nature of Pods and their relationship with resources, which are key aspects of a Pod in Kubernetes."
+            "feedback": "The candidate provided a good start, but their answer lacks technical accuracy and completeness, and could be more concise and relevant to the question."
+        },
+        {
+            "question": "How do you configure and manage Jenkins agents, including setting up agent nodes and allocating jobs to them?",
+            "candidate_answer": "",
+            "ideal_answer": "**Configuring and Managing Jenkins Agents:**\n\nTo configure and manage Jenkins agents, follow these steps:\n\n1. **Create Agent Nodes:**\n   - In Jenkins, navigate to **Manage Jenkins** > **Configure System**.\n   - Click on **Add a new node** and provide the node details (e.g., name, DNS name, credentials).\n   - Choose the node type (e.g., Remote access, Jenkins controller).\n\n2. **Configure Agent Nodes:**\n   - Define agent attributes (e.g., memory, CPU, disk space).\n   - Configure agent labels (e.g., node group).\n   - Choose the agent startup mode (e.g., connected, disconnected).\n\n3. **Allocate Jobs to Agent Nodes:**\n   - Create a new job and go to **Manage Jenkins** > **Configure System**.\n   - Select the agent node(s) that should run the job using Label Expression (e.g., node-group:build).\n   - You can use Jenkinsfile or Multibranch Pipeline to dynamically allocate jobs to agents.\n\n4. **Monitor and Manage Agent Performance:**\n   - Use the Jenkins UI to view agent status, performance metrics, and resource utilization.\n   - Configure agent health checks and alerts to notify administrators of any issues.\n\n5. **Automate Agent Provisioning and Scaling:**\n   - Use Jenkins plugins (e.g., Kubernetes plugin) to automate agent provisioning and scaling.\n\nBy following these steps, you can efficiently configure and manage Jenkins agents to meet your scalability, security, and performance requirements.",
+            "fluency_score": 100,
+            "correctness_score": 42,
+            "feedback": "The candidate provided a good overview of configuring and managing Jenkins agents, but lacked details on specific configuration options and automation tools, resulting in a lower score in technical accuracy and completeness."
+        },
+        {
+            "question": "Explain generators in Python.",
+            "candidate_answer": " something you can see, all properties of maintenance, uh...",
+            "ideal_answer": "**Generators in Python**\n\nA generator is a special type of function in Python that can be used to generate a sequence of results instead of computing them all at once and returning them in a list or similar data structure. Generators are defined using the `yield` keyword, which suspends the execution of the generator until the next `next()` call.\n\nHere's an example of a simple generator:\n```python\ndef infinite_sequence():\n    num = 0\n    while True:\n        yield num\n        num += 1\n```\nUsing the `infinite_sequence()` generator:\n```python\ngen = infinite_sequence()\nfor _ in range(10):\n    print(next(gen))  # prints numbers from 0 to 9\n```\nGenerators are useful when working with large datasets, as they can save memory by generating values on-the-fly and only keeping a minimal amount of state.",
+            "fluency_score": 80,
+            "correctness_score": 0,
+            "feedback": "The candidate's answer is completely unrelated to the topic of generators in Python, indicating a lack of understanding of the subject."
         },
         {
             "question": "Difference between ECS and EKS.",
-            "candidate_answer": "",
-            "ideal_answer": "**ECS (Elastic Container Service) and EKS (Elastic Kubernetes Service) Differences:**\n\nECS is a container orchestration service provided by AWS, similar to Docker Swarm, that runs containers within the EC2 instances. It provides a way to manage and scale containerized applications. It uses an event-driven architecture to manage the container lifecycle and supports both Linux and Windows containers.\n\nEKS, on the other hand, is a managed Kubernetes service that allows users to run Kubernetes on AWS, without installing, managing, or maintaining the underlying Kubernetes control plane. EKS is ideal for applications requiring complex, stateful workloads and those that require a lot of Kubernetes native functionality.\n\n**Key differences:**\n\n- **Orchestration method**: ECS uses its own service discovery and task definition while EKS relies on Kubernetes primitives for orchestration.\n- **Complexity**: EKS requires a deeper understanding of Kubernetes, while ECS is more straightforward to manage.\n- **Scalability**: Both services offer high scalability but EKS is geared towards more elastic and dynamic environments.\n- **Workloads**: ECS is ideal for microservices-based applications, while EKS is better suited for complex, stateful workloads like databases and big data processing.\n\nUltimately, the choice between ECS and EKS depends on the complexity of your application and your comfort level with container orchestration solutions. If you have a simple microservices-based application, ECS might be a good fit, but if you're working with complex, stateful workloads that require a rich array of Kubernetes features, EKS is a better choice.",
+            "candidate_answer": " Lastly, container is LIAM.",
+            "ideal_answer": "ECS (Elastic Container Service) and EKS (Elastic Kubernetes Service) are both container orchestration services provided by AWS, but they serve different purposes and use cases:\n\n- **ECS** is a low-level container orchestration service that allows you to run, stop, and manage containerized applications. It provides a choice of runtimes and supports a wide range of container standards, including Docker. ECS manages containers but does not necessarily manage the cluster or the service level.\n\n- **EKS**, on the other hand, is a managed Kubernetes service that allows you to run Kubernetes on AWS without worrying about the underlying infrastructure. It provides a managed control plane for Kubernetes and supports the full range of Kubernetes features, including deployments, pods, and services. EKS manages the cluster, service level, and the orchestration of applications.\n\nIn summary, ECS is used for container orchestration, while EKS is used for Kubernetes orchestration, making it more suitable for complex, multi-container, and multi-service applications.",
             "fluency_score": 100,
-            "correctness_score": 40,
-            "feedback": "The candidate provided a good start, but lacked depth in explaining the key differences and nuances between ECS and EKS, resulting in a lower score for completeness and technical accuracy."
+            "correctness_score": 0,
+            "feedback": "The candidate's answer is completely unrelated to the question and does not demonstrate any understanding of ECS and EKS."
         },
         {
-            "question": "Tell me about yourself.",
+            "question": "What is Kubernetes?",
+            "candidate_answer": " Uber next is an orchestrization platform. Open source container, we also make the permits scaling and then there's one more continuous applications.",
+            "ideal_answer": "Kubernetes is an open-source container orchestration system for automating the deployment, scalability, and management of containerized applications. It allows for efficient resource allocation, scaling, and self-healing, making it an ideal choice for large-scale containerized environments.",
+            "fluency_score": 100,
+            "correctness_score": 10,
+            "feedback": "The candidate failed to accurately describe Kubernetes, instead mentioning \"Uber next\" which is not a relevant term in this context, and provided incomplete and inaccurate information about its features."
+        },
+        {
+            "question": "What is EC2?",
             "candidate_answer": "",
-            "ideal_answer": "\"I'm a highly motivated and detail-oriented software developer with [number] years of experience in designing, developing, and deploying scalable applications using [primary programming languages and/or technologies]. My expertise lies in [key areas of specialization], with a strong understanding of computer science fundamentals and software engineering principles. I'm passionate about staying up-to-date with industry trends and best practices, and I'm excited about the opportunity to contribute my skills and experience to a dynamic and innovative team.\"",
+            "ideal_answer": "Amazon Elastic Compute Cloud (EC2) is a web service that provides scalable virtual servers (instances) in the cloud, allowing users to run applications on high-performance computing resources, such as compute, memory, and storage, on a pay-as-you-go basis.",
             "fluency_score": 100,
             "correctness_score": 40,
-            "feedback": "The candidate lacks technical accuracy, completeness, and relevance in their answer, failing to mention key areas of specialization, computer science fundamentals, and software engineering principles."
+            "feedback": "The candidate provided a basic definition, but lacked technical accuracy and completeness, and failed to mention key features such as scalability, pay-as-you-go pricing, and high-performance computing resources."
         },
         {
             "question": "Difference between Docker and Virtual Machine.",
-            "candidate_answer": " . Rude-raka weddingshte.) . \uc81c\uac00 Boxerar..",
-            "ideal_answer": "**Docker vs Virtual Machine**\n\nThe primary difference between Docker and Virtual Machine lies in how they isolate the operating system.\n\n* A Virtual Machine (VM) creates an entirely new operating system instance, running on top of a host machine's OS. This results in additional overhead, as you're essentially running on top of another OS, which increases memory and processing power requirements.\n* Docker, on the other hand, is a containerization platform that runs on top of a host machine's OS. It uses a lightweight approach to isolate applications, with each container sharing the host OS. This reduces the overhead and makes containers highly portable.\n\nIn summary, VMs are more resource-intensive, while Docker provides a lighter-weight, highly portable solution for running applications.",
-            "fluency_score": 100,
-            "correctness_score": 0,
-            "feedback": "The candidate's answer is completely unrelated to the question and does not demonstrate any understanding of the topic."
-        },
-        {
-            "question": "How do you implement automated testing in a CI/CD pipeline, including unit tests, integration tests, and end-to-end tests, and what are some best practices for writing effective tests?",
-            "candidate_answer": " \u06c1\u06cc \u0648\u06c1 \u062c\u0633 \u0639\u0627\u0631\u0628\u0648\u06ba \u06a9\u06d2 clos\u06cc\u0639 \u06c1\u06cc\u06ba \u0645\u0631\u06cc\u0639 \uc8c4\uc1a1\u06c1 \u0622\u062e\u0631 \u06c1\u0648\u06ba \u0627\u0648\u0631 \u067e\u0686\u06be\u06d2 \u0642\u0644\u0648\u06cc\u0632raszam \u0648 \u0627\u0648\u0631 \u067e\u0686\u06be\u06d2 amenities \u0627\u0633 \u06a9\u0648 \u0627\u0644\u06cc\u0648\u062c\u06c1 \u0622\u062e\u0631 \u06a9\u06d2 \u0646\u0628\u061f \u06cc\u06c1 \u0628\u0645 \u0646\u0645\u06cc\u0631\u060c \u0648\u06c1 \u062c\u0633 \u06c1\u0631 \u0627\u0648\u0631 \u0628\u0646\u0627\u0646\u06a9\u06cc\u0632\u06cc\u0646 \u06c1\u0635\u05e3\u06a9 ca\u0142e \u06c1\u0648 \u0631\u06a9\u06be \u0646\u06c1\u06cc\u06ba \u062a\u0627\u06cc\u0645\u06cc\u062f \u06a9\u06d2 \u0646\u06cc\u06d4",
-            "ideal_answer": "Here's a concise technical interview answer:\n\n**Implementing Automated Testing in CI/CD Pipeline**\n\nTo implement automated testing in a CI/CD pipeline, I would follow these steps:\n\n1. **Unit Tests**: Write unit tests for individual components or functions using a testing framework like JUnit or PyUnit. Focus on isolating dependencies and testing each unit independently.\n2. **Integration Tests**: Create integration tests to verify how components interact with each other. Use mocking libraries to isolate dependencies and reduce test complexity.\n3. **End-to-End Tests**: Design end-to-end tests to simulate user interactions with the system. Use a testing framework like Selenium or Cypress to interact with the UI.\n\n**CI/CD Pipeline Configuration**\n\nTo integrate these tests into a CI/CD pipeline, I would:\n\n1. Use a CI/CD tool like Jenkins, Travis CI, or CircleCI to create a pipeline.\n2. Add unit tests, integration tests, and end-to-end tests to the pipeline.\n3. Configure the pipeline to run these tests on every code commit.\n4. Use a test reporting tool like TestNG or Allure to generate reports and track test results.\n\n**Best Practices for Writing Effective Tests**\n\nTo write effective tests, I would:\n\n1. **Keep tests independent**: Ensure each test runs independently and does not affect other tests.\n2. **Use descriptive names**: Use clear and descriptive names for tests and test cases.\n3. **Test for failures**: Verify that the system fails in the expected way when errors occur.\n4. **Write test-driven development**: Write tests before writing code to ensure code quality and testability.\n5. **Use mocking libraries**: Isolate dependencies to reduce test complexity and improve test speed.\n6. **Test for code coverage**: Use tools like CodeCoverage or Istanbul to ensure code coverage exceeds 80%.\n7. **Continuously refactor and improve tests**: Regularly review and improve tests to maintain test quality and detect potential issues.\n\nBy following these steps and best practices, organizations can ensure high-quality code, improve test coverage, and reduce the risk of bugs and errors in their CI/CD pipeline.",
-            "fluency_score": 100,
-            "correctness_score": 0,
-            "feedback": "The candidate's answer is not in English and does not demonstrate any understanding of the topic, making it impossible to evaluate their technical accuracy, completeness, or relevance."
-        },
-        {
-            "question": "What are Python decorators?",
-            "candidate_answer": "",
-            "ideal_answer": "Python decorators are a design pattern that allows programmers to modify the behavior of a function or class without permanently modifying it. They are a shorthand way to wrap a function, modifying its behavior without permanently changing its implementation. A decorator is a small function that takes another function as an argument and extends the behavior of the latter function without explicitly modifying it.",
-            "fluency_score": 100,
+            "candidate_answer": " , . . . . . . . . . .",
+            "ideal_answer": "**Q: Difference between Docker and Virtual Machine.**\n\nA Docker is a containerization platform that allows you to package an application and its dependencies into a single container. This container shares the host machine's operating system and kernel, making it lightweight and efficient.\n\nOn the other hand, a Virtual Machine (VM) is a hardware virtualization platform that creates a complete isolated virtual environment with its own operating system and kernel. Each VM has its own OS instance, which makes it more resource-intensive.\n\nKey differences:\n\n- **Chroot vs full OS instance**: Docker uses chroot to isolate the container, while a VM has a complete OS instance.\n- **System Resources**: Docker is more lightweight and efficient in resource usage compared to a VM.\n- **Hardware Virtualization**: A VM requires hardware virtualization (e.g. VMware, VirtualBox), while Docker does not.",
+            "fluency_score": 55,
             "correctness_score": 40,
-            "feedback": "The candidate has a good understanding of the basic concept of Python decorators, but lacks technical accuracy and completeness in their explanation. They could have provided more details about how decorators work and their applications."
+            "feedback": "The candidate provided a good start but failed to mention key differences such as hardware virtualization and the fact that Docker does not require it, and also did not elaborate on the implications of these differences."
+        },
+        {
+            "question": "Why should we hire you?",
+            "candidate_answer": " You are not hiring me. Okay, I am hiring you. Please Wendy, Dr. Eduardo",
+            "ideal_answer": "\"I believe I'm the ideal fit for this role because I bring a unique combination of technical skills and soft skills that align with the company's goals. With my [X years/major relevant projects/industry experience], I've developed a strong [programming language/framework/technical expertise] and a proven track record of [achieving results/solving complex problems]. Additionally, I possess excellent communication, teamwork, and problem-solving skills, which have been demonstrated through my past experiences. I'm excited about the opportunity to leverage my skills and expertise to contribute to the company's success and growth.\"",
+            "fluency_score": 90,
+            "correctness_score": 0,
+            "feedback": "The candidate's answer completely deviates from the expected format and does not demonstrate any understanding of the question, failing to address the key aspects of technical skills, soft skills, and relevance to the company's goals."
+        },
+        {
+            "question": "Tell me about yourself.",
+            "candidate_answer": " F I have no full sex being dead if not deaf unless this latch CLSp",
+            "ideal_answer": "\"I'm a highly motivated software engineer with [number] years of experience in designing and developing scalable, efficient, and innovative solutions using a range of technologies including [list specific programming languages, frameworks, and tools]. My expertise spans [specific areas of expertise, e.g., cloud computing, machine learning, or web development]. I'm passionate about staying up-to-date with industry trends and best practices, and I'm excited about the opportunity to apply my skills and experience to drive success in a new role. Throughout my career, I've demonstrated a strong ability to work collaboratively with cross-functional teams, communicate technical concepts effectively, and deliver high-quality results under tight deadlines.\"",
+            "fluency_score": 100,
+            "correctness_score": 0,
+            "feedback": "The candidate's answer is completely unrelated to the question and lacks any technical accuracy, completeness, or relevance."
         }
     ]
 }

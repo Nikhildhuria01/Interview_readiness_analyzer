@@ -40,14 +40,15 @@ print("9")
 # CONFIG
 # =====================
 
-ANSWER_DURATION      = 30
+ANSWER_DURATION = 30
 CAMERA_FRAME_INTERVAL = 0.05
-CAMERA_WINDOW_NAME   = "AI Mock Interview"
+CAMERA_WINDOW_NAME = "AI Mock Interview"
 
 
 # =====================
 # SPEAK
 # =====================
+
 
 def speak(text):
     try:
@@ -65,10 +66,38 @@ def speak(text):
 
 
 # =====================
+# CAMERA BACKEND (cross-platform)
+# cv2.CAP_DSHOW is Windows-only (DirectShow). On macOS this causes
+# VideoCapture to fail to open, which is why it worked on Windows but
+# not on Mac. Pick the right backend per-OS, with a safe fallback.
+# =====================
+
+
+def open_camera(index=0):
+    system = platform.system()
+    if system == "Windows":
+        backends = [cv2.CAP_DSHOW, cv2.CAP_MSMF, cv2.CAP_ANY]
+    elif system == "Darwin":
+        backends = [cv2.CAP_AVFOUNDATION, cv2.CAP_ANY]
+    else:
+        backends = [cv2.CAP_V4L2, cv2.CAP_ANY]
+
+    for backend in backends:
+        cap = cv2.VideoCapture(index, backend)
+        if cap.isOpened():
+            return cap
+        cap.release()
+
+    # Last resort: let OpenCV pick automatically (no backend flag at all)
+    return cv2.VideoCapture(index)
+
+
+# =====================
 # OVERLAY
 # Fix: weights must sum to 1.0  →  0.6 + 0.4 = 1.0  (no gray bleed)
 # Fix: draw ALL text AFTER addWeighted so it isn't blended away
 # =====================
+
 
 def draw_camera_overlay(
     frame,
@@ -97,8 +126,9 @@ def draw_camera_overlay(
         if question_number > 0
         else "Preparing Interview..."
     )
-    cv2.putText(frame, q_label, (20, 35),
-                cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 200, 255), 2)
+    cv2.putText(
+        frame, q_label, (20, 35), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 200, 255), 2
+    )
 
     # Word-wrap question text (~58 chars per line, max 3 lines)
     words = question.split()
@@ -112,27 +142,69 @@ def draw_camera_overlay(
     if cur:
         lines.append(cur)
     for idx, line in enumerate(lines[:3]):
-        cv2.putText(frame, line, (20, 72 + idx * 30),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.60, (255, 255, 255), 1)
+        cv2.putText(
+            frame,
+            line,
+            (20, 72 + idx * 30),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.60,
+            (255, 255, 255),
+            1,
+        )
 
     # Scores
-    cv2.putText(frame, f"Eye Contact:    {eye_score:.2f}",    (20, 175),
-                cv2.FONT_HERSHEY_SIMPLEX, 0.58, (80, 255, 120), 1)
-    cv2.putText(frame, f"Posture:        {posture_score:.2f}", (20, 203),
-                cv2.FONT_HERSHEY_SIMPLEX, 0.58, (80, 255, 120), 1)
-    cv2.putText(frame, f"Head Stability: {head_score:.2f}",   (20, 231),
-                cv2.FONT_HERSHEY_SIMPLEX, 0.58, (80, 255, 120), 1)
+    cv2.putText(
+        frame,
+        f"Eye Contact:    {eye_score:.2f}",
+        (20, 175),
+        cv2.FONT_HERSHEY_SIMPLEX,
+        0.58,
+        (80, 255, 120),
+        1,
+    )
+    cv2.putText(
+        frame,
+        f"Posture:        {posture_score:.2f}",
+        (20, 203),
+        cv2.FONT_HERSHEY_SIMPLEX,
+        0.58,
+        (80, 255, 120),
+        1,
+    )
+    cv2.putText(
+        frame,
+        f"Head Stability: {head_score:.2f}",
+        (20, 231),
+        cv2.FONT_HERSHEY_SIMPLEX,
+        0.58,
+        (80, 255, 120),
+        1,
+    )
 
     # Status text (processing / analysing…) – bottom-left
     if status_text:
-        cv2.putText(frame, status_text, (20, h - 20),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.60, (0, 220, 255), 2)
+        cv2.putText(
+            frame,
+            status_text,
+            (20, h - 20),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.60,
+            (0, 220, 255),
+            2,
+        )
 
     # REC indicator – bottom-right
     if recording:
         cv2.circle(frame, (w - 30, h - 30), 12, (0, 0, 220), -1)
-        cv2.putText(frame, "REC", (w - 72, h - 22),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.55, (0, 0, 220), 2)
+        cv2.putText(
+            frame,
+            "REC",
+            (w - 72, h - 22),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.55,
+            (0, 0, 220),
+            2,
+        )
 
 
 # =====================
@@ -140,6 +212,7 @@ def draw_camera_overlay(
 # Owns cap entirely; pushes annotated frames into shared_frame[0].
 # Never calls imshow – only the main thread does that.
 # =====================
+
 
 def camera_monitor_thread(
     interview_state,
@@ -151,7 +224,7 @@ def camera_monitor_thread(
     shared_frame,
 ):
     print("CAMERA THREAD: starting")
-    cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+    cap = open_camera(0)
     print("CAMERA THREAD: VideoCapture created")
 
     if not cap.isOpened():
@@ -169,9 +242,9 @@ def camera_monitor_thread(
                 continue
 
             # Analyse frame
-            last_eye     = get_eye_contact_score(frame)
+            last_eye = get_eye_contact_score(frame)
             last_posture = get_posture_score(frame)
-            last_head    = get_head_stability_score(frame)
+            last_head = get_head_stability_score(frame)
 
             eye_scores.append(last_eye)
             posture_scores.append(last_posture)
@@ -179,11 +252,11 @@ def camera_monitor_thread(
 
             # Read shared state under lock
             with frame_lock:
-                question        = interview_state.get("question", "")
+                question = interview_state.get("question", "")
                 question_number = interview_state.get("question_number", 0)
                 total_questions = interview_state.get("total_questions", 0)
-                recording       = interview_state.get("recording", False)
-                status_text     = interview_state.get("status_text", "")
+                recording = interview_state.get("recording", False)
+                status_text = interview_state.get("status_text", "")
 
             display = frame.copy()
             draw_camera_overlay(
@@ -212,6 +285,7 @@ def camera_monitor_thread(
 # HELPERS
 # =====================
 
+
 def refresh_display(frame_lock, shared_frame, window_name):
     """Show the latest frame. Must be called from the main thread."""
     with frame_lock:
@@ -234,8 +308,8 @@ def run_in_background_with_live_camera(
     window refreshed on the main thread.  Returns the function's return
     value via a result container.
     """
-    result_box  = [None]
-    error_box   = [None]
+    result_box = [None]
+    error_box = [None]
 
     def wrapper():
         try:
@@ -259,33 +333,34 @@ def run_in_background_with_live_camera(
 # MAIN
 # =====================
 
+
 def run_audio_interview():
 
     resume_skills = ["Python", "Docker", "AWS"]
-    jd_skills     = ["Python", "Docker", "AWS", "Kubernetes", "CI/CD", "Jenkins"]
+    jd_skills = ["Python", "Docker", "AWS", "Kubernetes", "CI/CD", "Jenkins"]
 
     questions = generate_interview_questions(resume_skills, jd_skills)
     questions = list(dict.fromkeys(questions))
     questions = questions[:10]
 
-    all_fluency_scores     = []
+    all_fluency_scores = []
     all_correctness_scores = []
-    question_results       = []
+    question_results = []
 
-    frame_lock      = threading.Lock()
-    shared_frame    = [None]
+    frame_lock = threading.Lock()
+    shared_frame = [None]
 
     interview_state = {
-        "question":        "",
+        "question": "",
         "question_number": 0,
         "total_questions": len(questions),
-        "recording":       False,
-        "status_text":     "",
+        "recording": False,
+        "status_text": "",
     }
 
-    eye_scores     = []
+    eye_scores = []
     posture_scores = []
-    head_scores    = []
+    head_scores = []
 
     stop_camera_event = threading.Event()
 
@@ -324,9 +399,9 @@ def run_audio_interview():
 
             # ── show question on screen ──────────────────────────────────
             with frame_lock:
-                interview_state["question"]        = question
+                interview_state["question"] = question
                 interview_state["question_number"] = i
-                interview_state["status_text"]     = ""
+                interview_state["status_text"] = ""
 
             print(f"\n{'='*60}")
             print(f"QUESTION {i}: {question}")
@@ -344,7 +419,7 @@ def run_audio_interview():
             print(f"Recording answer {i}  ({ANSWER_DURATION}s)…")
 
             with frame_lock:
-                interview_state["recording"]   = True
+                interview_state["recording"] = True
                 interview_state["status_text"] = ""
 
             record_start = time.time()
@@ -362,7 +437,7 @@ def run_audio_interview():
             rec_thread.start()
 
             while rec_thread.is_alive():
-                elapsed   = time.time() - record_start
+                elapsed = time.time() - record_start
                 remaining = max(0, ANSWER_DURATION - elapsed)
                 cv2.setWindowTitle(
                     CAMERA_WINDOW_NAME,
@@ -388,7 +463,9 @@ def run_audio_interview():
             transcript = run_in_background_with_live_camera(
                 generate_transcript,
                 (answer_file, transcript_file),
-                frame_lock, shared_frame, CAMERA_WINDOW_NAME,
+                frame_lock,
+                shared_frame,
+                CAMERA_WINDOW_NAME,
             )
             print(f"Transcript: {transcript}")
 
@@ -399,7 +476,9 @@ def run_audio_interview():
             fluency_results = run_in_background_with_live_camera(
                 analyze_advanced_fluency,
                 (transcript, ANSWER_DURATION),
-                frame_lock, shared_frame, CAMERA_WINDOW_NAME,
+                frame_lock,
+                shared_frame,
+                CAMERA_WINDOW_NAME,
             )
             fluency_score = fluency_results["fluency_score"]
             all_fluency_scores.append(fluency_score)
@@ -412,7 +491,9 @@ def run_audio_interview():
             ideal_answer = run_in_background_with_live_camera(
                 generate_ideal_answer,
                 (question,),
-                frame_lock, shared_frame, CAMERA_WINDOW_NAME,
+                frame_lock,
+                shared_frame,
+                CAMERA_WINDOW_NAME,
             )
             print(f"Ideal Answer: {ideal_answer}")
 
@@ -423,10 +504,12 @@ def run_audio_interview():
             correctness_result = run_in_background_with_live_camera(
                 calculate_correctness,
                 (question, transcript, ideal_answer),
-                frame_lock, shared_frame, CAMERA_WINDOW_NAME,
+                frame_lock,
+                shared_frame,
+                CAMERA_WINDOW_NAME,
             )
             correctness_score = correctness_result["score"]
-            feedback          = correctness_result["feedback"]
+            feedback = correctness_result["feedback"]
             all_correctness_scores.append(correctness_score)
             print(f"Correctness: {correctness_score}  |  Feedback: {feedback}")
 
@@ -436,12 +519,12 @@ def run_audio_interview():
 
             question_results.append(
                 {
-                    "question":          question,
-                    "candidate_answer":  transcript,
-                    "ideal_answer":      ideal_answer,
-                    "fluency_score":     fluency_score,
+                    "question": question,
+                    "candidate_answer": transcript,
+                    "ideal_answer": ideal_answer,
+                    "fluency_score": fluency_score,
                     "correctness_score": correctness_score,
-                    "feedback":          feedback,
+                    "feedback": feedback,
                 }
             )
 
@@ -453,25 +536,29 @@ def run_audio_interview():
         cv2.destroyAllWindows()
 
     # ── final scores ─────────────────────────────────────────────────────
-    avg_fluency     = round(sum(all_fluency_scores)     / max(1, len(all_fluency_scores)),     2)
-    avg_correctness = round(sum(all_correctness_scores) / max(1, len(all_correctness_scores)), 2)
-    eye_score       = round(sum(eye_scores)     / max(1, len(eye_scores)),     2)
-    post_score      = round(sum(posture_scores)  / max(1, len(posture_scores)),  2)
-    head_score      = round(sum(head_scores)     / max(1, len(head_scores)),     2)
+    avg_fluency = round(sum(all_fluency_scores) / max(1, len(all_fluency_scores)), 2)
+    avg_correctness = round(
+        sum(all_correctness_scores) / max(1, len(all_correctness_scores)), 2
+    )
+    eye_score = round(sum(eye_scores) / max(1, len(eye_scores)), 2)
+    post_score = round(sum(posture_scores) / max(1, len(posture_scores)), 2)
+    head_score = round(sum(head_scores) / max(1, len(head_scores)), 2)
 
     overall = calculate_overall_score(
         avg_fluency, avg_correctness, eye_score, post_score, head_score
     )
 
-    save_results({
-        "average_fluency":      avg_fluency,
-        "average_correctness":  avg_correctness,
-        "eye_contact_score":    eye_score,
-        "posture_score":        post_score,
-        "head_stability_score": head_score,
-        "overall_score":        overall,
-        "questions":            question_results,
-    })
+    save_results(
+        {
+            "average_fluency": avg_fluency,
+            "average_correctness": avg_correctness,
+            "eye_contact_score": eye_score,
+            "posture_score": post_score,
+            "head_stability_score": head_score,
+            "overall_score": overall,
+            "questions": question_results,
+        }
+    )
     generate_report()
 
     print("\n==========================")
