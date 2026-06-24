@@ -116,8 +116,8 @@ def draw_camera_overlay(
     # Draw the dark rectangle on a copy FIRST, then blend.
     # Weights 0.60 + 0.40 = 1.0  → no gray artifact
     banner_copy = frame.copy()
-    cv2.rectangle(banner_copy, (0, 0), (w, 250), (20, 20, 20), -1)
-    cv2.addWeighted(banner_copy, 0.60, frame, 0.40, 0, frame)
+    # cv2.rectangle(banner_copy, (0, 0), (w, 250), (20, 20, 20), -1)
+    # cv2.addWeighted(banner_copy, 0.60, frame, 0.40, 0, frame)
     # Now draw text ON TOP of the already-blended frame
 
     # Question counter
@@ -126,9 +126,7 @@ def draw_camera_overlay(
         if question_number > 0
         else "Preparing Interview..."
     )
-    cv2.putText(
-        frame, q_label, (20, 35), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 200, 255), 2
-    )
+    cv2.putText(frame, q_label, (20, 35), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 0), 2)
 
     # Word-wrap question text (~58 chars per line, max 3 lines)
     words = question.split()
@@ -147,9 +145,9 @@ def draw_camera_overlay(
             line,
             (20, 72 + idx * 30),
             cv2.FONT_HERSHEY_SIMPLEX,
-            0.60,
-            (255, 255, 255),
-            1,
+            0.75,
+            (0, 0, 0),
+            2,
         )
 
     # Scores
@@ -158,27 +156,27 @@ def draw_camera_overlay(
         f"Eye Contact:    {eye_score:.2f}",
         (20, 175),
         cv2.FONT_HERSHEY_SIMPLEX,
-        0.58,
-        (80, 255, 120),
-        1,
+        0.75,
+        (0, 0, 0),
+        2,
     )
     cv2.putText(
         frame,
         f"Posture:        {posture_score:.2f}",
         (20, 203),
         cv2.FONT_HERSHEY_SIMPLEX,
-        0.58,
-        (80, 255, 120),
-        1,
+        0.75,
+        (0, 0, 0),
+        2,
     )
     cv2.putText(
         frame,
         f"Head Stability: {head_score:.2f}",
         (20, 231),
         cv2.FONT_HERSHEY_SIMPLEX,
-        0.58,
-        (80, 255, 120),
-        1,
+        0.75,
+        (0, 0, 0),
+        2,
     )
 
     # Status text (processing / analysing…) – bottom-left
@@ -188,8 +186,8 @@ def draw_camera_overlay(
             status_text,
             (20, h - 20),
             cv2.FONT_HERSHEY_SIMPLEX,
-            0.60,
-            (0, 220, 255),
+            0.75,
+            (0, 0, 0),
             2,
         )
 
@@ -202,7 +200,7 @@ def draw_camera_overlay(
             (w - 72, h - 22),
             cv2.FONT_HERSHEY_SIMPLEX,
             0.55,
-            (0, 0, 220),
+            (0, 0, 0),
             2,
         )
 
@@ -458,7 +456,7 @@ def run_audio_interview():
             transcript_file = f"backend/interview/transcripts/transcript_{i}.txt"
 
             with frame_lock:
-                interview_state["status_text"] = "Generating transcript…"
+                interview_state["status_text"] = ""
 
             transcript = run_in_background_with_live_camera(
                 generate_transcript,
@@ -471,7 +469,7 @@ def run_audio_interview():
 
             # ── fluency ──────────────────────────────────────────────────
             with frame_lock:
-                interview_state["status_text"] = "Analysing fluency…"
+                interview_state["status_text"] = ""
 
             fluency_results = run_in_background_with_live_camera(
                 analyze_advanced_fluency,
@@ -486,7 +484,7 @@ def run_audio_interview():
 
             # ── ideal answer ─────────────────────────────────────────────
             with frame_lock:
-                interview_state["status_text"] = "Generating ideal answer…"
+                interview_state["status_text"] = ""
 
             ideal_answer = run_in_background_with_live_camera(
                 generate_ideal_answer,
@@ -499,7 +497,7 @@ def run_audio_interview():
 
             # ── correctness ──────────────────────────────────────────────
             with frame_lock:
-                interview_state["status_text"] = "Calculating correctness…"
+                interview_state["status_text"] = ""
 
             correctness_result = run_in_background_with_live_camera(
                 calculate_correctness,
