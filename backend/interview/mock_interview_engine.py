@@ -1,3 +1,9 @@
+import sys
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parents[1]
+
+sys.path.append(str(BASE_DIR / "ml"))
 import time
 import platform
 import subprocess
@@ -8,6 +14,7 @@ import cv2
 from eye_contact_analysis import get_eye_contact_score
 from posture_analysis import get_posture_score
 from head_stability import get_head_stability_score
+from predict_readiness import predict_readiness, get_readiness_status
 
 print("1")
 from question_engine import generate_interview_questions
@@ -542,9 +549,14 @@ def run_audio_interview():
     post_score = round(sum(posture_scores) / max(1, len(posture_scores)), 2)
     head_score = round(sum(head_scores) / max(1, len(head_scores)), 2)
 
-    overall = calculate_overall_score(
-        avg_fluency, avg_correctness, eye_score, post_score, head_score
+    overall = predict_readiness(
+        avg_fluency,
+        avg_correctness,
+        eye_score,
+        post_score,
+        head_score,
     )
+    readiness_status = get_readiness_status(overall)
 
     save_results(
         {
@@ -568,6 +580,7 @@ def run_audio_interview():
     print(f"Posture:             {post_score}")
     print(f"Head Stability:      {head_score}")
     print(f"Overall Score:       {overall}")
+    print(f"Readiness Status: {readiness_status}")
     print("Interview Results Saved!")
 
 

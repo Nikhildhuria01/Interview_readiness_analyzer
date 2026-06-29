@@ -5,6 +5,7 @@
     "posture_score": 69.82,
     "head_stability_score": 62.59,
     "overall_score": 58.73,
+    "readiness_status": readiness_status,
     "questions": [
         {
             "question": "Describe a conflict in your team and how you handled it.",
