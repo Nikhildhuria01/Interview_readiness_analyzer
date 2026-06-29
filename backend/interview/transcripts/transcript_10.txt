@@ -1,1 +1,1 @@
- F I have no full sex being dead if not deaf unless this latch CLSp
+ What is Cuban Niche? It's an open source platform which automates deployment, scaling and management of containerized applications. Mainly, acts as the brain or the conductor which coordinates thousands of software's containers across multiple servers, ensuring your app runs smoothly and without downtime.

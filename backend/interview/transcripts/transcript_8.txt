@@ -1,1 +1,1 @@
- , . . . . . . . . . .
+ I do decorators are the special kind of functions which are used as wrapper classes and except another function as a mark event. Extend of modified behavior and return a new function without modifying the original code. The provider reusable way to manage cross cutting.

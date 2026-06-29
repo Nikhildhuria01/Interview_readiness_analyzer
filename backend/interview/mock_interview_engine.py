@@ -10,7 +10,8 @@ import subprocess
 import threading
 import pyttsx3
 import cv2
-
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from save_training_data import save_training_data
 from eye_contact_analysis import get_eye_contact_score
 from posture_analysis import get_posture_score
 from head_stability import get_head_stability_score
@@ -337,8 +338,106 @@ def run_in_background_with_live_camera(
 # =====================
 # MAIN
 # =====================
+import time
 
+def analyze_single_answer(answer):
 
+    print(f"\nAnalyzing: {answer['question']}")
+
+    t = time.time()
+
+    transcript = generate_transcript(
+        answer["answer_file"],
+        answer["transcript_file"]
+    )
+
+    print(f"STT Time: {round(time.time()-t,2)} sec")
+
+    t = time.time()
+
+    fluency_results = analyze_advanced_fluency(
+        transcript,
+        ANSWER_DURATION
+    )
+
+    print(f"Fluency Time: {round(time.time()-t,2)} sec")
+
+    t = time.time()
+
+    ideal_answer = generate_ideal_answer(
+        answer["question"]
+    )
+
+    print(f"Ideal Answer Time: {round(time.time()-t,2)} sec")
+
+    t = time.time()
+
+    correctness_result = calculate_correctness(
+        answer["question"],
+        transcript,
+        ideal_answer
+    )
+
+    print(f"Correctness Time: {round(time.time()-t,2)} sec")
+
+    return {
+
+        "question": answer["question"],
+
+        "candidate_answer": transcript,
+
+        "ideal_answer": ideal_answer,
+
+        "fluency_score": fluency_results["fluency_score"],
+
+        "correctness_score": correctness_result["score"],
+
+        "feedback": correctness_result["feedback"]
+
+    }
+
+def analyze_all_answers(recorded_answers):
+
+    print("\n====================================")
+    print("Analyzing Interview")
+    print("====================================\n")
+
+    results = []
+
+    total = len(recorded_answers)
+
+    completed = 0
+
+    with ThreadPoolExecutor(max_workers=4) as executor:
+
+        futures = [
+
+            executor.submit(
+                analyze_single_answer,
+                answer
+            )
+
+            for answer in recorded_answers
+
+        ]
+
+        for future in as_completed(futures):
+
+            results.append(
+                future.result()
+            )
+
+            completed += 1
+
+            print(
+                f"Completed {completed}/{total}"
+            )
+
+    print("\n====================================")
+    print("Analysis Finished")
+    print("====================================\n")
+
+    return results
 def run_audio_interview():
 
     resume_skills = ["Python", "Docker", "AWS"]
@@ -346,12 +445,12 @@ def run_audio_interview():
 
     questions = generate_interview_questions(resume_skills, jd_skills)
     questions = list(dict.fromkeys(questions))
-    questions = questions[:10]
+    questions = questions[:2]
 
     all_fluency_scores = []
     all_correctness_scores = []
     question_results = []
-
+    recorded_answers = []
     frame_lock = threading.Lock()
     shared_frame = [None]
 
@@ -431,7 +530,7 @@ def run_audio_interview():
 
             def _timed_record():
                 record_answer(answer_file, ANSWER_DURATION)
-
+                recorded_answers.append({"question": question,"answer_file": answer_file,"transcript_file":f"backend/interview/transcripts/transcript_{i}.txt"})
             rec_done = [False]
 
             def _record_wrapper():
@@ -460,87 +559,95 @@ def run_audio_interview():
             print(f"Answer saved: {answer_file}")
 
             # ── transcript ───────────────────────────────────────────────
-            transcript_file = f"backend/interview/transcripts/transcript_{i}.txt"
+            # transcript_file = f"backend/interview/transcripts/transcript_{i}.txt"
 
-            with frame_lock:
-                interview_state["status_text"] = ""
+            # with frame_lock:
+            #     interview_state["status_text"] = ""
 
-            transcript = run_in_background_with_live_camera(
-                generate_transcript,
-                (answer_file, transcript_file),
-                frame_lock,
-                shared_frame,
-                CAMERA_WINDOW_NAME,
-            )
-            print(f"Transcript: {transcript}")
+            # transcript = run_in_background_with_live_camera(
+            #     generate_transcript,
+            #     (answer_file, transcript_file),
+            #     frame_lock,
+            #     shared_frame,
+            #     CAMERA_WINDOW_NAME,
+            # )
+            # print(f"Transcript: {transcript}")
 
             # ── fluency ──────────────────────────────────────────────────
-            with frame_lock:
-                interview_state["status_text"] = ""
+            # with frame_lock:
+            #     interview_state["status_text"] = ""
 
-            fluency_results = run_in_background_with_live_camera(
-                analyze_advanced_fluency,
-                (transcript, ANSWER_DURATION),
-                frame_lock,
-                shared_frame,
-                CAMERA_WINDOW_NAME,
-            )
-            fluency_score = fluency_results["fluency_score"]
-            all_fluency_scores.append(fluency_score)
-            print(f"Fluency Score: {fluency_score}")
+            # fluency_results = run_in_background_with_live_camera(
+            #     analyze_advanced_fluency,
+            #     (transcript, ANSWER_DURATION),
+            #     frame_lock,
+            #     shared_frame,
+            #     CAMERA_WINDOW_NAME,
+            # )
+            # fluency_score = fluency_results["fluency_score"]
+            # all_fluency_scores.append(fluency_score)
+            # print(f"Fluency Score: {fluency_score}")
 
             # ── ideal answer ─────────────────────────────────────────────
-            with frame_lock:
-                interview_state["status_text"] = ""
+            # with frame_lock:
+            #     interview_state["status_text"] = ""
 
-            ideal_answer = run_in_background_with_live_camera(
-                generate_ideal_answer,
-                (question,),
-                frame_lock,
-                shared_frame,
-                CAMERA_WINDOW_NAME,
-            )
-            print(f"Ideal Answer: {ideal_answer}")
+            # ideal_answer = run_in_background_with_live_camera(
+            #     generate_ideal_answer,
+            #     (question,),
+            #     frame_lock,
+            #     shared_frame,
+            #     CAMERA_WINDOW_NAME,
+            # )
+            # print(f"Ideal Answer: {ideal_answer}")
 
-            # ── correctness ──────────────────────────────────────────────
-            with frame_lock:
-                interview_state["status_text"] = ""
+            # # ── correctness ──────────────────────────────────────────────
+            # with frame_lock:
+            #     interview_state["status_text"] = ""
 
-            correctness_result = run_in_background_with_live_camera(
-                calculate_correctness,
-                (question, transcript, ideal_answer),
-                frame_lock,
-                shared_frame,
-                CAMERA_WINDOW_NAME,
-            )
-            correctness_score = correctness_result["score"]
-            feedback = correctness_result["feedback"]
-            all_correctness_scores.append(correctness_score)
-            print(f"Correctness: {correctness_score}  |  Feedback: {feedback}")
+            # correctness_result = run_in_background_with_live_camera(
+            #     calculate_correctness,
+            #     (question, transcript, ideal_answer),
+            #     frame_lock,
+            #     shared_frame,
+            #     CAMERA_WINDOW_NAME,
+            # )
+            # correctness_score = correctness_result["score"]
+            # feedback = correctness_result["feedback"]
+            # all_correctness_scores.append(correctness_score)
+            # print(f"Correctness: {correctness_score}  |  Feedback: {feedback}")
 
             # ── clear status, ready for next question ────────────────────
             with frame_lock:
                 interview_state["status_text"] = ""
 
-            question_results.append(
-                {
-                    "question": question,
-                    "candidate_answer": transcript,
-                    "ideal_answer": ideal_answer,
-                    "fluency_score": fluency_score,
-                    "correctness_score": correctness_score,
-                    "feedback": feedback,
-                }
-            )
+            # question_results.append(
+            #     {
+            #         "question": question,
+            #         "candidate_answer": transcript,
+            #         "ideal_answer": ideal_answer,
+            #         "fluency_score": fluency_score,
+            #         "correctness_score": correctness_score,
+            #         "feedback": feedback,
+            #     }
+            # )
 
             refresh_display(frame_lock, shared_frame, CAMERA_WINDOW_NAME)
+        print("\n==============================")
+        print("Interview Finished")
+        print("==============================")
 
+        print("\nAnalyzing Interview...\n")
+        question_results = analyze_all_answers(recorded_answers)
     finally:
         stop_camera_event.set()
         camera_thread.join(timeout=5)
         cv2.destroyAllWindows()
 
     # ── final scores ─────────────────────────────────────────────────────
+    all_fluency_scores = [q["fluency_score"]for q in question_results]
+
+    all_correctness_scores = [q["correctness_score"]for q in question_results]
     avg_fluency = round(sum(all_fluency_scores) / max(1, len(all_fluency_scores)), 2)
     avg_correctness = round(
         sum(all_correctness_scores) / max(1, len(all_correctness_scores)), 2
@@ -556,8 +663,17 @@ def run_audio_interview():
         post_score,
         head_score,
     )
+    #overall_score = float(overall_score)
+    save_training_data(
+        avg_fluency,
+        avg_correctness,
+        eye_score,
+        post_score,
+        head_score,
+        overall
+    )
     readiness_status = get_readiness_status(overall)
-
+ 
     save_results(
         {
             "average_fluency": avg_fluency,

@@ -1,1 +1,1 @@
- bhtRnaול Wow  tsunami 50 de saisu open Performance
+Docker is a containerization platform where as virtual machine is used in place of a physical computer.

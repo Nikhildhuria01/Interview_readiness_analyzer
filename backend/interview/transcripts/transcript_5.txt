@@ -1,1 +1,1 @@
- Lastly, container is LIAM.
+ The document is a criminalization tool that is used to make easier deployment and running the applications. It packages an application and all its dependencies into an isolated unit ensuring the applied ż.

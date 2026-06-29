@@ -1,91 +1,26 @@
 {
-    "average_fluency": 92.5,
-    "average_correctness": 23.2,
-    "eye_contact_score": 87.23,
-    "posture_score": 69.82,
-    "head_stability_score": 62.59,
-    "overall_score": 58.73,
-    "readiness_status": readiness_status,
+    "average_fluency": 100.0,
+    "average_correctness": 35.0,
+    "eye_contact_score": 90.33,
+    "posture_score": 34.89,
+    "head_stability_score": 68.99,
+    "overall_score": 67.76000213623047,
     "questions": [
         {
-            "question": "Describe a conflict in your team and how you handled it.",
-            "candidate_answer": "",
-            "ideal_answer": "\"In a recent project, our team faced a conflict between two developers, John and Sarah, who had differing opinions on the best approach to implement a complex algorithm. The tension arose due to a tight deadline and competing priorities.\n\nTo resolve the conflict, I followed these steps:\n\n1. **Identified the issue**: I talked to both John and Sarah individually to understand their perspectives and concerns.\n2. **Clarified the goals**: I ensured that both developers were aligned with the project's objectives and the requirements.\n3. **Defined the key factors**: We broke down the complex algorithm into smaller components and identified the key factors influencing the project timeline.\n4. **Collaborative solution**: We worked together to find a compromise that merged both developers' ideas, incorporating the pros of each approach.\n5. **Set boundaries and timelines**: We established clear roles, responsibilities, and timelines for each developer to minimize misunderstandings and maximize productivity.\n\nBy actively listening, clarifying expectations, and fostering a collaborative environment, we managed to resolve the conflict efficiently and deliver the project on time.\"",
-            "fluency_score": 100,
-            "correctness_score": 60,
-            "feedback": "The candidate provided a clear narrative of a conflict resolution experience, but lacked technical details and specific examples to support their claims, resulting in a lower score in Technical Accuracy and Completeness."
-        },
-        {
-            "question": "What is Docker?",
-            "candidate_answer": "",
-            "ideal_answer": "Docker is an open-source containerization platform that allows developers to package, ship, and run applications in containers. It provides a lightweight and portable way to deploy applications by virtualizing the operating system and its dependencies, enabling consistent and reliable execution across different environments and infrastructure. Containers in Docker share the host operating system, reducing the overhead of traditional virtualization and increasing efficiency.",
-            "fluency_score": 100,
-            "correctness_score": 40,
-            "feedback": "The candidate provided a good start, but their answer lacks technical accuracy and completeness, and could be more concise and relevant to the question."
-        },
-        {
-            "question": "How do you configure and manage Jenkins agents, including setting up agent nodes and allocating jobs to them?",
-            "candidate_answer": "",
-            "ideal_answer": "**Configuring and Managing Jenkins Agents:**\n\nTo configure and manage Jenkins agents, follow these steps:\n\n1. **Create Agent Nodes:**\n   - In Jenkins, navigate to **Manage Jenkins** > **Configure System**.\n   - Click on **Add a new node** and provide the node details (e.g., name, DNS name, credentials).\n   - Choose the node type (e.g., Remote access, Jenkins controller).\n\n2. **Configure Agent Nodes:**\n   - Define agent attributes (e.g., memory, CPU, disk space).\n   - Configure agent labels (e.g., node group).\n   - Choose the agent startup mode (e.g., connected, disconnected).\n\n3. **Allocate Jobs to Agent Nodes:**\n   - Create a new job and go to **Manage Jenkins** > **Configure System**.\n   - Select the agent node(s) that should run the job using Label Expression (e.g., node-group:build).\n   - You can use Jenkinsfile or Multibranch Pipeline to dynamically allocate jobs to agents.\n\n4. **Monitor and Manage Agent Performance:**\n   - Use the Jenkins UI to view agent status, performance metrics, and resource utilization.\n   - Configure agent health checks and alerts to notify administrators of any issues.\n\n5. **Automate Agent Provisioning and Scaling:**\n   - Use Jenkins plugins (e.g., Kubernetes plugin) to automate agent provisioning and scaling.\n\nBy following these steps, you can efficiently configure and manage Jenkins agents to meet your scalability, security, and performance requirements.",
-            "fluency_score": 100,
-            "correctness_score": 42,
-            "feedback": "The candidate provided a good overview of configuring and managing Jenkins agents, but lacked details on specific configuration options and automation tools, resulting in a lower score in technical accuracy and completeness."
-        },
-        {
-            "question": "Explain generators in Python.",
-            "candidate_answer": " something you can see, all properties of maintenance, uh...",
-            "ideal_answer": "**Generators in Python**\n\nA generator is a special type of function in Python that can be used to generate a sequence of results instead of computing them all at once and returning them in a list or similar data structure. Generators are defined using the `yield` keyword, which suspends the execution of the generator until the next `next()` call.\n\nHere's an example of a simple generator:\n```python\ndef infinite_sequence():\n    num = 0\n    while True:\n        yield num\n        num += 1\n```\nUsing the `infinite_sequence()` generator:\n```python\ngen = infinite_sequence()\nfor _ in range(10):\n    print(next(gen))  # prints numbers from 0 to 9\n```\nGenerators are useful when working with large datasets, as they can save memory by generating values on-the-fly and only keeping a minimal amount of state.",
-            "fluency_score": 80,
-            "correctness_score": 0,
-            "feedback": "The candidate's answer is completely unrelated to the topic of generators in Python, indicating a lack of understanding of the subject."
-        },
-        {
-            "question": "Difference between ECS and EKS.",
-            "candidate_answer": " Lastly, container is LIAM.",
-            "ideal_answer": "ECS (Elastic Container Service) and EKS (Elastic Kubernetes Service) are both container orchestration services provided by AWS, but they serve different purposes and use cases:\n\n- **ECS** is a low-level container orchestration service that allows you to run, stop, and manage containerized applications. It provides a choice of runtimes and supports a wide range of container standards, including Docker. ECS manages containers but does not necessarily manage the cluster or the service level.\n\n- **EKS**, on the other hand, is a managed Kubernetes service that allows you to run Kubernetes on AWS without worrying about the underlying infrastructure. It provides a managed control plane for Kubernetes and supports the full range of Kubernetes features, including deployments, pods, and services. EKS manages the cluster, service level, and the orchestration of applications.\n\nIn summary, ECS is used for container orchestration, while EKS is used for Kubernetes orchestration, making it more suitable for complex, multi-container, and multi-service applications.",
-            "fluency_score": 100,
-            "correctness_score": 0,
-            "feedback": "The candidate's answer is completely unrelated to the question and does not demonstrate any understanding of ECS and EKS."
-        },
-        {
-            "question": "What is Kubernetes?",
-            "candidate_answer": " Uber next is an orchestrization platform. Open source container, we also make the permits scaling and then there's one more continuous applications.",
-            "ideal_answer": "Kubernetes is an open-source container orchestration system for automating the deployment, scalability, and management of containerized applications. It allows for efficient resource allocation, scaling, and self-healing, making it an ideal choice for large-scale containerized environments.",
+            "question": "Difference between Docker and Virtual Machine.",
+            "candidate_answer": "Docker is a containerization platform where as virtual machine is used in place of a physical computer.",
+            "ideal_answer": "The primary differences between Docker and Virtual Machine (VM) are:\n\n1. **Operating System Independence**: In a VM, each VM has its own operating system instance, whereas Docker containers share the host operating system's kernel, reducing overhead.\n\n2. **Process Isolation**: Docker provides process-level isolation, while VMs provide hardware-level isolation using a hypervisor.\n\n3. **Portability**: Docker images are more portable due to the layered file system, whereas VMs contain a whole operating system, making them less portable.\n\n4. **Resource Utilization**: Docker containers are more lightweight and efficient, using fewer resources compared to running entire operating systems within VMs.\n\n5. **Scalability**: Docker containers make it easier to scale and deploy applications, while VMs can be more complex to manage and scale.",
             "fluency_score": 100,
             "correctness_score": 10,
-            "feedback": "The candidate failed to accurately describe Kubernetes, instead mentioning \"Uber next\" which is not a relevant term in this context, and provided incomplete and inaccurate information about its features."
+            "feedback": "The candidate failed to demonstrate any understanding of the key differences between Docker and Virtual Machine, providing a very basic and inaccurate definition of both concepts."
         },
         {
-            "question": "What is EC2?",
+            "question": "What are the key differences between Continuous Integration and Continuous Deployment, and how do you decide which approach to use in a given project?",
             "candidate_answer": "",
-            "ideal_answer": "Amazon Elastic Compute Cloud (EC2) is a web service that provides scalable virtual servers (instances) in the cloud, allowing users to run applications on high-performance computing resources, such as compute, memory, and storage, on a pay-as-you-go basis.",
+            "ideal_answer": "I'd be happy to explain the key differences between Continuous Integration (CI) and Continuous Deployment (CD).\n\n**Continuous Integration (CI):**\nCI is a software development practice where code changes are automatically validated and verified in a central location, such as a version control system, as soon as they are committed. This ensures that the new code does not break existing functionality.\n\n**Continuous Deployment (CD):**\nCD is a software development practice where validated code changes are automatically deployed to production or other production-like environments.\n\n**Key differences:**\n\n- **Automation**: Both CI and CD involve automation, but CI focuses on automating the testing and validation of code, while CD adds the automation of deployment.\n- **Scope**: CI is typically confined to the development environment, whereas CD involves multiple environments, including production.\n- **Stability**: CI aims to prevent errors from spreading to the development team, while CD aims to push changes to production environments as fast as possible.\n\n**When to use each:**\n\n- Use CI when you want to catch errors and bugs early in the development process, and have a high level of autonomy with deployment, such as in a small team or a proof-of-concept project.\n- Use CD when you want to release changes quickly, have a high degree of confidence in your code quality, and require minimal human intervention in the deployment process, such as in a mature product with low complexity changes.\n\nUltimately, both CI and CD aim to reduce the time and effort required to build, test, and deploy software. A balanced approach to both practices can ensure faster and more reliable software delivery, reducing the complexity and risk of deployment. \n\nIt's also worth mentioning that many companies use CI/CD pipelines as a unified practice known as **DevOps**, which involves automation from development to production in a consistent and coordinated manner.",
             "fluency_score": 100,
-            "correctness_score": 40,
-            "feedback": "The candidate provided a basic definition, but lacked technical accuracy and completeness, and failed to mention key features such as scalability, pay-as-you-go pricing, and high-performance computing resources."
-        },
-        {
-            "question": "Difference between Docker and Virtual Machine.",
-            "candidate_answer": " , . . . . . . . . . .",
-            "ideal_answer": "**Q: Difference between Docker and Virtual Machine.**\n\nA Docker is a containerization platform that allows you to package an application and its dependencies into a single container. This container shares the host machine's operating system and kernel, making it lightweight and efficient.\n\nOn the other hand, a Virtual Machine (VM) is a hardware virtualization platform that creates a complete isolated virtual environment with its own operating system and kernel. Each VM has its own OS instance, which makes it more resource-intensive.\n\nKey differences:\n\n- **Chroot vs full OS instance**: Docker uses chroot to isolate the container, while a VM has a complete OS instance.\n- **System Resources**: Docker is more lightweight and efficient in resource usage compared to a VM.\n- **Hardware Virtualization**: A VM requires hardware virtualization (e.g. VMware, VirtualBox), while Docker does not.",
-            "fluency_score": 55,
-            "correctness_score": 40,
-            "feedback": "The candidate provided a good start but failed to mention key differences such as hardware virtualization and the fact that Docker does not require it, and also did not elaborate on the implications of these differences."
-        },
-        {
-            "question": "Why should we hire you?",
-            "candidate_answer": " You are not hiring me. Okay, I am hiring you. Please Wendy, Dr. Eduardo",
-            "ideal_answer": "\"I believe I'm the ideal fit for this role because I bring a unique combination of technical skills and soft skills that align with the company's goals. With my [X years/major relevant projects/industry experience], I've developed a strong [programming language/framework/technical expertise] and a proven track record of [achieving results/solving complex problems]. Additionally, I possess excellent communication, teamwork, and problem-solving skills, which have been demonstrated through my past experiences. I'm excited about the opportunity to leverage my skills and expertise to contribute to the company's success and growth.\"",
-            "fluency_score": 90,
-            "correctness_score": 0,
-            "feedback": "The candidate's answer completely deviates from the expected format and does not demonstrate any understanding of the question, failing to address the key aspects of technical skills, soft skills, and relevance to the company's goals."
-        },
-        {
-            "question": "Tell me about yourself.",
-            "candidate_answer": " F I have no full sex being dead if not deaf unless this latch CLSp",
-            "ideal_answer": "\"I'm a highly motivated software engineer with [number] years of experience in designing and developing scalable, efficient, and innovative solutions using a range of technologies including [list specific programming languages, frameworks, and tools]. My expertise spans [specific areas of expertise, e.g., cloud computing, machine learning, or web development]. I'm passionate about staying up-to-date with industry trends and best practices, and I'm excited about the opportunity to apply my skills and experience to drive success in a new role. Throughout my career, I've demonstrated a strong ability to work collaboratively with cross-functional teams, communicate technical concepts effectively, and deliver high-quality results under tight deadlines.\"",
-            "fluency_score": 100,
-            "correctness_score": 0,
-            "feedback": "The candidate's answer is completely unrelated to the question and lacks any technical accuracy, completeness, or relevance."
+            "correctness_score": 60,
+            "feedback": "The candidate provided a good overview of the key differences between CI and CD, but lacked some key details and nuances, particularly in the explanation of when to use each approach."
         }
     ]
 }

@@ -1,40 +1,39 @@
-import socket
-import whisper
+from faster_whisper import WhisperModel
+import os
 
-print("Loading Whisper Model Once...")
+print("Loading Faster-Whisper Model...")
 
-# Whisper's internal model downloader uses urllib with NO timeout set.
-# If your network can connect but then stalls (common with some VPNs,
-# corporate networks, or firewalls that silently drop packets instead
-# of rejecting them), this would previously hang forever with zero
-# error message. Setting a global socket timeout makes it fail loudly
-# instead, so you actually see what's wrong.
-socket.setdefaulttimeout(60)
+model = WhisperModel(
+    "tiny",
+    device="cpu",
+    compute_type="int8"
+)
 
-try:
-    # device="cpu" forced explicitly: on machines without a CUDA GPU
-    # (e.g. Macs), letting torch auto-detect can behave inconsistently.
-    model = whisper.load_model("base", device="cpu")
-    print("Whisper Ready!")
-except socket.timeout:
-    raise RuntimeError(
-        "Whisper model download timed out after 60s. This usually means "
-        "your network/firewall/VPN is blocking or silently dropping the "
-        "connection to openaipublic.azureedge.net. Try: (1) a different "
-        "network, (2) disabling VPN, or (3) manually downloading the "
-        "model once on a network that works."
-    )
-except Exception as e:
-    raise RuntimeError(f"Failed to load Whisper model: {e}")
+print("Faster-Whisper Ready!")
 
 
 def generate_transcript(audio_file, transcript_file):
 
-    result = model.transcribe(audio_file)
+    segments, info = model.transcribe(
+        audio_file,
+        beam_size=1
+    )
 
-    transcript = result["text"]
+    transcript = " ".join(
+        segment.text
+        for segment in segments
+    ).strip()
 
-    with open(transcript_file, "w", encoding="utf-8") as f:
+    os.makedirs(
+        os.path.dirname(transcript_file),
+        exist_ok=True
+    )
+
+    with open(
+        transcript_file,
+        "w",
+        encoding="utf-8"
+    ) as f:
 
         f.write(transcript)
 
