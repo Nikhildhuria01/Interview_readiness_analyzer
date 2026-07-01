@@ -1,12 +1,3 @@
-import os
-
-# Defensive: if this module is ever imported on its own (e.g. a
-# standalone diagnostic script) rather than via mock_interview_engine.py,
-# make sure the OpenMP thread pool is still capped before torch loads.
-# See mock_interview_engine.py header comment for the full explanation.
-os.environ.setdefault("KMP_DUPLICATE_LIB_OK", "TRUE")
-os.environ.setdefault("OMP_NUM_THREADS", "1")
-
 import socket
 import whisper
 
@@ -23,7 +14,7 @@ socket.setdefaulttimeout(60)
 try:
     # device="cpu" forced explicitly: on machines without a CUDA GPU
     # (e.g. Macs), letting torch auto-detect can behave inconsistently.
-    model = whisper.load_model("base", device="cpu")
+    model = whisper.load_model("tiny", device="cpu")
     print("Whisper Ready!")
 except socket.timeout:
     raise RuntimeError(

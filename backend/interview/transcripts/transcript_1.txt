@@ -1,1 +1,5 @@
+<<<<<<< HEAD
  badass l Lil liability l另 l cheak l vs webcam pockethone
+=======
+Docker is a containerization platform where as virtual machine is used in place of a physical computer.
+>>>>>>> 58ff9b0e3532e560c68ab8a6b622586db0a3d7dc

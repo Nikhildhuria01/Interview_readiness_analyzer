@@ -9,8 +9,7 @@ def predict_readiness(fluency, correctness, eye_contact, posture, head_stability
         [[fluency, correctness, eye_contact, posture, head_stability]]
     )
 
-    return round(prediction[0], 2)
-
+    return float(round(prediction[0],2))
 
 if __name__ == "__main__":
 
