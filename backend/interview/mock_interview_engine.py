@@ -1,3 +1,23 @@
+import os
+
+# ===============================================================
+# those ships its own bundled
+# OpenMP runtime. On macOS (esp. Apple Silicon), loading more than
+# one copy of libomp.dylib into a single process causes either a
+# crash ("OMP: Error #15") or, worse, a silent deadlock with no
+# error output at all — which is exactly what "freezes forever
+# after 'Loading Whisper Model Once...'" looks like, since that
+# print happens right before torch.load() runs internally.
+# Windows doesn't hit this bug, which is why it "worked on Windows".
+# ===============================================================
+os.environ.setdefault("KMP_DUPLICATE_LIB_OK", "TRUE")
+os.environ.setdefault("OMP_NUM_THREADS", "1")
+os.environ.setdefault("MKL_NUM_THREADS", "1")
+os.environ.setdefault("OPENBLAS_NUM_THREADS", "1")
+os.environ.setdefault("VECLIB_MAXIMUM_THREADS", "1")
+os.environ.setdefault("NUMEXPR_NUM_THREADS", "1")
+os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
+
 import sys
 from pathlib import Path
 
