@@ -6,7 +6,7 @@ export const generateQuestions = async (
 ) => {
 
   const response = await api.post(
-    "/questions/generate",
+    "/questions/questions/generate",
     {
       resume_text: resumeText,
       job_text: jobText,

@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 import os
+from groq import Groq
 
 
 def generate_online_questions(skill):

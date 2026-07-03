@@ -6,7 +6,7 @@ export const analyzeSkillGap = async (
 ) => {
 
   const response = await api.post(
-    "/analysis/skill-gap",
+    "/analysis/analysis/skill-gap",
     {
       resume_text: resumeText,
       job_text: jobText,

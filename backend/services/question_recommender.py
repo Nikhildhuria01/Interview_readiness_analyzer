@@ -1,5 +1,6 @@
 import sys
 from pathlib import Path
+from backend.services.online_question_generator import generate_online_questions
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
 
@@ -191,8 +192,6 @@ def get_existing_skill_questions(skills):
 
 
 def get_missing_skill_questions(skills):
-
-    from backend.services.online_question_generator import generate_online_questions
 
     questions = []
 

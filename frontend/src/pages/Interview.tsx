@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import Camera from "../components/Camera";
+import { useRef } from "react";
 
 export default function Interview() {
 
@@ -8,8 +10,80 @@ export default function Interview() {
     const questions: string[] = location.state?.questions || [];
 
     const [currentQuestion, setCurrentQuestion] = useState(1);
+    const [seconds, setSeconds] = useState(0);
+    const [isRecording, setIsRecording] = useState(false);
+    const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+    const audioChunks = useRef<Blob[]>([]);
+
 
     const totalQuestions = questions.length || 10;
+    useEffect(() => {
+
+    const timer = setInterval(() => {
+
+        setSeconds((prev) => prev + 1);
+
+    }, 1000);
+
+    return () => clearInterval(timer);
+
+}, []);
+const startRecording = async () => {
+
+    try {
+
+        const stream = await navigator.mediaDevices.getUserMedia({
+            audio: true,
+        });
+
+        const recorder = new MediaRecorder(stream);
+
+        mediaRecorderRef.current = recorder;
+
+        audioChunks.current = [];
+
+        recorder.ondataavailable = (event) => {
+
+            audioChunks.current.push(event.data);
+
+        };
+
+        recorder.start();
+
+        setIsRecording(true);
+
+    } catch (err) {
+
+        console.error(err);
+
+        alert("Unable to access microphone.");
+
+    }
+
+};
+
+const stopRecording = () => {
+
+    if (!mediaRecorderRef.current) return;
+
+    mediaRecorderRef.current.onstop = () => {
+
+        const audioBlob = new Blob(
+            audioChunks.current,
+            {
+                type: "audio/wav",
+            }
+        );
+
+        console.log("Audio Recorded:", audioBlob);
+
+    };
+
+    mediaRecorderRef.current.stop();
+
+    setIsRecording(false);
+
+};
 
     return (
 
@@ -41,7 +115,7 @@ export default function Interview() {
 
                         <div className="text-red-400 font-bold">
 
-                            ⏱ 00:00
+                          ⏱ {seconds}s
 
                         </div>
 
@@ -94,11 +168,7 @@ export default function Interview() {
 
                         <div className="w-full h-96 bg-black rounded-xl flex items-center justify-center">
 
-                            <span className="text-slate-500">
-
-                                Webcam Preview
-
-                            </span>
+                            <Camera />
 
                         </div>
 
@@ -108,21 +178,33 @@ export default function Interview() {
 
                     <div className="mt-10 flex justify-center gap-6">
 
+                       <button
+
+    onClick={startRecording}
+
+    disabled={isRecording}
+
+    className="bg-green-600 hover:bg-green-700 disabled:bg-gray-600 px-8 py-4 rounded-xl text-white font-bold"
+
+>
+
+    🎤 {isRecording ? "Recording..." : "Start Recording"}
+
+</button>
+
                         <button
-                            className="bg-green-600 hover:bg-green-700 px-8 py-4 rounded-xl text-white font-bold"
-                        >
 
-                            🎤 Start Recording
+    onClick={stopRecording}
 
-                        </button>
+    disabled={!isRecording}
 
-                        <button
-                            className="bg-red-600 hover:bg-red-700 px-8 py-4 rounded-xl text-white font-bold"
-                        >
+    className="bg-red-600 hover:bg-red-700 disabled:bg-gray-600 px-8 py-4 rounded-xl text-white font-bold"
 
-                            ⏹ Stop
+>
 
-                        </button>
+    ⏹ Stop Recording
+
+</button>
 
                     </div>
 

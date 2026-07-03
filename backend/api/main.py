@@ -13,19 +13,32 @@ app = FastAPI(title="AI Interview Readiness Analyzer", version="1.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Later we'll restrict this
+    allow_origins=["*"],  # Restrict in production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-app.include_router(resume_router)
-app.include_router(interview_router)
-app.include_router(report_router)
-app.include_router(prediction_router)
-app.include_router(job_router)
-app.include_router(analysis_router)
-app.include_router(questions_router)
+# Resume
+app.include_router(resume_router, prefix="/resume", tags=["Resume"])
+
+# Interview
+app.include_router(interview_router, prefix="/interview", tags=["Interview"])
+
+# Report
+app.include_router(report_router, prefix="/report", tags=["Report"])
+
+# Prediction
+app.include_router(prediction_router, prefix="/prediction", tags=["Prediction"])
+
+# Job Description
+app.include_router(job_router, prefix="/job", tags=["Job Description"])
+
+# Analysis
+app.include_router(analysis_router, prefix="/analysis", tags=["Analysis"])
+
+# Questions
+app.include_router(questions_router, prefix="/questions", tags=["Questions"])
 
 
 @app.get("/")
