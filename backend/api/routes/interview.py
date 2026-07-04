@@ -3,6 +3,7 @@ import shutil
 import uuid
 
 from fastapi import APIRouter, UploadFile, File, Form, HTTPException
+from typing import List
 
 from backend.interview.interview_service import analyze_answer
 

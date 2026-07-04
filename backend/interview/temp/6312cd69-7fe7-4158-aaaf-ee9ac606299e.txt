@@ -1,0 +1,1 @@
+ How do you handle errors and exception in fast API application? And what are some best practices for error handling? Actually, I have very less experience with fast APIs, so I don't know how to handle errors and exceptions. You can call SAP a connection. How do you handle errors? I have much experience.

@@ -1,0 +1,1 @@
+ Difference between Docker and Virtual Machine. Docker is a containerization platform whereas Virtual Machine is used to run other OS in one system simultaneously. Thank you.

@@ -1,0 +1,1 @@
+ What is normalization? Breaking the tables into their shorter forms to remove redundancy and providing integrity in the code. Oh in the database is code normalization. There are many forms, 2S, 3S, BCNF.
