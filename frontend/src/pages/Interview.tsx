@@ -4,6 +4,11 @@ import Camera from "../components/Camera";
 import { analyzeInterview } from "../services/interviewApi";
 import Webcam from "react-webcam";
 import { analyzeCameraFrame } from "../services/cameraApi";
+<<<<<<< HEAD
+=======
+import { predictReadiness } from "../services/readinessApi";
+import { downloadInterviewReport } from "../services/reportApi";
+>>>>>>> 309c86c (bfore dockr)
 const QUESTION_DURATION = 60; // seconds per question
 
 type QuestionResult = {
@@ -27,6 +32,16 @@ export default function Interview() {
     const [phase, setPhase] = useState<Phase>("loading");
     const [results, setResults] = useState<QuestionResult[]>([]);
     const [cameraResults, setCameraResults] = useState({eyeContact: 0,posture: 0,headStability: 0,});
+<<<<<<< HEAD
+=======
+    const [readiness, setReadiness] = useState({
+
+    readiness_score: 0,
+
+    readiness_status: "",
+
+});
+>>>>>>> 309c86c (bfore dockr)
     const streamRef = useRef<MediaStream | null>(null);
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const audioChunksRef = useRef<Blob[]>([]);
@@ -258,12 +273,108 @@ const runAnalysis = async () => {
         }
 
     }
+<<<<<<< HEAD
 
+=======
+// ============================
+// Average Speech Scores
+// ============================
+
+const averageFluency = Math.round(
+
+    collected.reduce(
+
+        (sum, item) => sum + (item.fluency_score || 0),
+
+        0
+
+    ) / collected.length
+
+);
+
+const averageCorrectness = Math.round(
+
+    collected.reduce(
+
+        (sum, item) => sum + (item.correctness_score || 0),
+
+        0
+
+    ) / collected.length
+
+);
+
+// ============================
+// ML Prediction
+// ============================
+
+const readiness = await predictReadiness(
+
+    averageFluency,
+
+    averageCorrectness,
+
+    cameraResults.eyeContact,
+
+    cameraResults.posture,
+
+    cameraResults.headStability,
+
+);
+
+setReadiness(readiness);
+>>>>>>> 309c86c (bfore dockr)
     setResults(collected);
 
     setPhase("complete");
 
 };
+<<<<<<< HEAD
+=======
+const handleDownloadReport = async () => {
+
+    try {
+
+        const pdf = await downloadInterviewReport({
+
+            readiness_score: readiness.readiness_score,
+
+            readiness_status: readiness.readiness_status,
+
+            eye_contact: cameraResults.eyeContact,
+
+            posture: cameraResults.posture,
+
+            head_stability: cameraResults.headStability,
+
+            question_results: results,
+
+        });
+
+        const url = window.URL.createObjectURL(pdf);
+
+        const link = document.createElement("a");
+
+        link.href = url;
+
+        link.download = "Interview_Report.pdf";
+
+        link.click();
+
+        window.URL.revokeObjectURL(url);
+
+    }
+
+    catch (err) {
+
+        console.error(err);
+
+        alert("Failed to download report.");
+
+    }
+
+};
+>>>>>>> 309c86c (bfore dockr)
 
     return (
         <div className="min-h-screen bg-slate-950 p-10">
@@ -338,6 +449,70 @@ const runAnalysis = async () => {
                             <h2 className="text-3xl font-bold text-white mb-4 text-center">Interview Results</h2>
                         <div className="bg-slate-950 rounded-2xl p-8 mb-8">
 
+<<<<<<< HEAD
+=======
+<div className="bg-slate-950 rounded-2xl p-8 mb-8">
+
+    <h3 className="text-cyan-400 text-2xl font-bold mb-6">
+
+        AI Readiness Prediction
+
+    </h3>
+
+    <div className="grid grid-cols-2 gap-8">
+
+        <div>
+
+            <p className="text-slate-400">
+
+                Readiness Score
+
+            </p>
+
+            <p className="text-5xl text-white font-bold mt-2">
+
+                {readiness.readiness_score.toFixed(1)}
+
+            </p>
+
+        </div>
+
+        <div>
+
+            <p className="text-slate-400">
+
+                Prediction
+
+            </p>
+
+            <p className="text-3xl text-cyan-400 font-bold mt-2">
+
+                {readiness.readiness_status}
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div className="text-center mb-8">
+
+    <button
+
+        onClick={handleDownloadReport}
+
+        className="bg-cyan-500 hover:bg-cyan-600 px-8 py-4 rounded-xl text-white font-bold"
+
+    >
+
+        📄 Download Interview Report
+
+    </button>
+
+</div>
+>>>>>>> 309c86c (bfore dockr)
     <h3 className="text-cyan-400 text-2xl font-bold mb-6">
         Camera Analysis
     </h3>

@@ -32,3 +32,6 @@ mlruns/
 # Temporary Files
 temp_resume.pdf.env
 .env
+
+
+.git_corrupted_backup/.git_corrupted_backup/
