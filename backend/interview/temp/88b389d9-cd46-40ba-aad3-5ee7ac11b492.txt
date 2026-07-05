@@ -1,0 +1,1 @@
+ Joyines are used in my SQL to integrate two more tables using natural joiner liquid Radial

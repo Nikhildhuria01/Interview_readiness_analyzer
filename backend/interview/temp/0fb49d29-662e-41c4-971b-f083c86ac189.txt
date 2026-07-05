@@ -1,0 +1,1 @@
+ GBM is Java Virtual Machine which gives us the virtual environment to run our Java code and to execute it for the same and besides that it enables us to execute Java bytecode and it translates platform independent bytecode into machine code specific to house the device.

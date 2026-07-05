@@ -1,0 +1,1 @@
+ A pointer is basically a reference which is used in C to make the changes wherever it is being used while an array is simply used to store the elements of the symbol data

@@ -1,0 +1,1 @@
+ Normalization is the process of making separating data into tables and basically we have got the first normal, second normal, third normal form in the VCNF form.

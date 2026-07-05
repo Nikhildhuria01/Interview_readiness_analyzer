@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import Camera from "../components/Camera";
 import { analyzeInterview } from "../services/interviewApi";
 import Webcam from "react-webcam";
-
+import { analyzeCameraFrame } from "../services/cameraApi";
 const QUESTION_DURATION = 60; // seconds per question
 
 type QuestionResult = {
@@ -26,14 +26,25 @@ export default function Interview() {
     const [timeLeft, setTimeLeft] = useState(QUESTION_DURATION);
     const [phase, setPhase] = useState<Phase>("loading");
     const [results, setResults] = useState<QuestionResult[]>([]);
-
+    const [cameraResults, setCameraResults] = useState({eyeContact: 0,posture: 0,headStability: 0,});
     const streamRef = useRef<MediaStream | null>(null);
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const audioChunksRef = useRef<Blob[]>([]);
     const recordingsRef = useRef<Blob[]>([]);
     const advancingRef = useRef(false); // guards against double-advance (e.g. React StrictMode)
     const cameraRef = useRef<Webcam>(null);
+    const eyeScores = useRef<number[]>([]);
+    const postureScores = useRef<number[]>([]);
+    const headScores = useRef<number[]>([]);
+    const average = (values: number[]) => {
 
+    if (values.length === 0) return 0;
+
+    return Math.round(
+        values.reduce((a, b) => a + b, 0) / values.length
+    );
+
+};
     // Request mic access once when the page loads
     useEffect(() => {
         let cancelled = false;
@@ -92,7 +103,31 @@ export default function Interview() {
 
         if (frame) {
 
-            console.log(frame.substring(0, 40));
+            (async () => {
+
+    try {
+
+  const result = await analyzeCameraFrame(frame);
+
+if (result.success) {
+
+    eyeScores.current.push(result.eye_contact);
+
+    postureScores.current.push(result.posture);
+
+    headScores.current.push(result.head_stability);
+
+}
+
+    }
+
+    catch (err) {
+
+        console.error(err);
+
+    }
+
+})();
 
         }
 
@@ -149,32 +184,86 @@ export default function Interview() {
         }
     };
 
-    const runAnalysis = async () => {
-        const collected: QuestionResult[] = [];
+const runAnalysis = async () => {
 
-        // Sequential on purpose: keeps load on the Whisper/XGBoost backend
-        // predictable one-answer-at-a-time instead of firing 10 requests at once.
-        for (let i = 0; i < totalQuestions; i++) {
-            const question = questions[i] || `Question ${i + 1}`;
-            const audioBlob = recordingsRef.current[i];
+    // ==========================
+    // Calculate Camera Averages
+    // ==========================
 
-            if (!audioBlob) {
-                collected.push({ question, error: "No recording captured for this question." });
-                continue;
-            }
+    const eyeContactAverage = average(eyeScores.current);
 
-            try {
-                const result = await analyzeInterview(question, audioBlob);
-                collected.push({ question, ...result });
-            } catch (err) {
-                console.error(err);
-                collected.push({ question, error: "Analysis failed for this answer." });
-            }
+    const postureAverage = average(postureScores.current);
+
+    const headStabilityAverage = average(headScores.current);
+
+    console.log("Camera Analysis");
+
+   setCameraResults({
+
+    eyeContact: eyeContactAverage,
+
+    posture: postureAverage,
+
+    headStability: headStabilityAverage,
+
+});
+
+    // ==========================
+    // Existing Analysis
+    // ==========================
+
+    const collected: QuestionResult[] = [];
+
+    // Sequential on purpose: keeps load on the Whisper/XGBoost backend
+    // predictable one-answer-at-a-time instead of firing 10 requests at once.
+    for (let i = 0; i < totalQuestions; i++) {
+
+        const question = questions[i] || `Question ${i + 1}`;
+
+        const audioBlob = recordingsRef.current[i];
+
+        if (!audioBlob) {
+
+            collected.push({
+                question,
+                error: "No recording captured for this question.",
+            });
+
+            continue;
         }
 
-        setResults(collected);
-        setPhase("complete");
-    };
+        try {
+
+            const result = await analyzeInterview(
+                question,
+                audioBlob
+            );
+
+            collected.push({
+                question,
+                ...result,
+            });
+
+        }
+
+        catch (err) {
+
+            console.error(err);
+
+            collected.push({
+                question,
+                error: "Analysis failed for this answer.",
+            });
+
+        }
+
+    }
+
+    setResults(collected);
+
+    setPhase("complete");
+
+};
 
     return (
         <div className="min-h-screen bg-slate-950 p-10">
@@ -247,7 +336,47 @@ export default function Interview() {
                     {phase === "complete" && (
                         <div className="space-y-8">
                             <h2 className="text-3xl font-bold text-white mb-4 text-center">Interview Results</h2>
+                        <div className="bg-slate-950 rounded-2xl p-8 mb-8">
 
+    <h3 className="text-cyan-400 text-2xl font-bold mb-6">
+        Camera Analysis
+    </h3>
+
+    <div className="grid grid-cols-3 gap-6">
+
+        <div>
+            <h4 className="text-slate-400 uppercase text-sm">
+                Eye Contact
+            </h4>
+
+            <p className="text-3xl text-white font-bold">
+                {cameraResults.eyeContact}
+            </p>
+        </div>
+
+        <div>
+            <h4 className="text-slate-400 uppercase text-sm">
+                Posture
+            </h4>
+
+            <p className="text-3xl text-white font-bold">
+                {cameraResults.posture}
+            </p>
+        </div>
+
+        <div>
+            <h4 className="text-slate-400 uppercase text-sm">
+                Head Stability
+            </h4>
+
+            <p className="text-3xl text-white font-bold">
+                {cameraResults.headStability}
+            </p>
+        </div>
+
+    </div>
+
+</div>
                             {results.map((r, idx) => (
                                 <div key={idx} className="bg-slate-950 rounded-2xl p-8">
                                     <h3 className="text-cyan-400 text-lg font-bold mb-3">

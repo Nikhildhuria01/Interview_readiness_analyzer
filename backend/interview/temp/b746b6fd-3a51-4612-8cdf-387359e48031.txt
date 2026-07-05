@@ -1,0 +1,1 @@
+ get basically contains the commands which we use in order to push pull our projects to the GitHub and so that we can have easy access of it.
