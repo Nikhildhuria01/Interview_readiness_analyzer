@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import Camera from "../components/Camera";
 import { analyzeInterview } from "../services/interviewApi";
+import Webcam from "react-webcam";
 
 const QUESTION_DURATION = 60; // seconds per question
 
@@ -31,6 +32,7 @@ export default function Interview() {
     const audioChunksRef = useRef<Blob[]>([]);
     const recordingsRef = useRef<Blob[]>([]);
     const advancingRef = useRef(false); // guards against double-advance (e.g. React StrictMode)
+    const cameraRef = useRef<Webcam>(null);
 
     // Request mic access once when the page loads
     useEffect(() => {
@@ -79,6 +81,26 @@ export default function Interview() {
         return () => clearInterval(interval);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [questionIndex, phase]);
+
+    useEffect(() => {
+
+    if (phase !== "interviewing") return;
+
+    const interval = setInterval(() => {
+
+        const frame = cameraRef.current?.getScreenshot();
+
+        if (frame) {
+
+            console.log(frame.substring(0, 40));
+
+        }
+
+    }, 1000);
+
+    return () => clearInterval(interval);
+
+}, [phase]);
 
     const startRecording = () => {
         const stream = streamRef.current;
@@ -201,7 +223,7 @@ export default function Interview() {
                             <div className="mt-10 bg-slate-900 rounded-2xl p-8">
                                 <h3 className="text-white text-2xl font-bold mb-5">Live Camera</h3>
                                 <div className="w-full h-96 bg-black rounded-xl flex items-center justify-center">
-                                    <Camera />
+                                   <Camera ref={cameraRef} />
                                 </div>
                             </div>
 

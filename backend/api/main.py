@@ -8,6 +8,7 @@ from backend.api.routes.prediction import router as prediction_router
 from backend.api.routes.job import router as job_router
 from backend.api.routes.analysis import router as analysis_router
 from backend.api.routes.questions import router as questions_router
+from backend.api.routes.camera import router as camera_router
 
 app = FastAPI(title="AI Interview Readiness Analyzer", version="1.0")
 
@@ -39,6 +40,8 @@ app.include_router(analysis_router, prefix="/analysis", tags=["Analysis"])
 
 # Questions
 app.include_router(questions_router, prefix="/questions", tags=["Questions"])
+
+app.include_router(camera_router, prefix="/camera", tags=["Camera"])
 
 
 @app.get("/")

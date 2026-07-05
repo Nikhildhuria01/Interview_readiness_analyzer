@@ -1,19 +1,20 @@
 import Webcam from "react-webcam";
+import { forwardRef } from "react";
 
-export default function Camera() {
+const Camera = forwardRef<Webcam>((props, ref) => {
 
     return (
 
         <Webcam
-
+            ref={ref}
             audio={false}
-
             mirrored
-
+            screenshotFormat="image/jpeg"
             className="rounded-xl w-full h-full"
-
         />
 
     );
 
-}
+});
+
+export default Camera;
