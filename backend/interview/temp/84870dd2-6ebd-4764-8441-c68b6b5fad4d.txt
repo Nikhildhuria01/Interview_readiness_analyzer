@@ -1,1 +1,0 @@
- difference between JDK and JRE. JDK is Java development kit and JRE is Java runtime environment that difference between them is JDK is used to compile and Randa Java code write compil and debug the Java code while JRE is is strictly used to execute

@@ -1,1 +1,0 @@
- What is Git? Git is a combination, a collection of commands which is used to pull and push our code to a cloud space known as GitHub. And it is very useful for handling big cloud projects. It makes easier, it makes collaboration with your clients. And last question, let's jump in on our vehicle.

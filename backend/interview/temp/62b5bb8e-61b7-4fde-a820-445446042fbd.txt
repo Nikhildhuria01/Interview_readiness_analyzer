@@ -1,1 +1,0 @@
- I solved a difficult problem regarding interview readiness and the visor and my MLOPS and DevOps project wherein the main issue was in the deployment case.

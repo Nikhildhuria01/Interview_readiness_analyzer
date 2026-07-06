@@ -1,1 +1,0 @@
- indexing is the process of organizing the files in a particular order to access them easily.
