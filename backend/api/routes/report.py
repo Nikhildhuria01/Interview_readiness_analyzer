@@ -12,6 +12,11 @@ router = APIRouter(
 )
 
 
+@router.get("/")
+def test():
+    return {"message": "Report API Working"}
+
+
 class ReportRequest(BaseModel):
 
     readiness_score: float
@@ -55,4 +60,3 @@ def generate_report(request: ReportRequest):
         filename="Interview_Report.pdf",
 
     )
-
