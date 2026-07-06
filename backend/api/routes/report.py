@@ -1,13 +1,4 @@
 from fastapi import APIRouter
-<<<<<<< HEAD
-
-router = APIRouter(prefix="/report", tags=["Report"])
-
-
-@router.get("/")
-def test():
-    return {"message": "Report API Working"}
-=======
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
@@ -64,4 +55,4 @@ def generate_report(request: ReportRequest):
         filename="Interview_Report.pdf",
 
     )
->>>>>>> 309c86c (bfore dockr)
+

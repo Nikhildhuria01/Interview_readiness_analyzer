@@ -46,7 +46,6 @@ app.include_router(camera_router, prefix="/camera", tags=["Camera"])
 app.include_router(readiness_router)
 
 
-
 @app.get("/")
 def home():
     return {"status": "Backend Running", "version": "1.0"}
