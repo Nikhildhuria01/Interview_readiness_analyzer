@@ -1,0 +1,1 @@
+ Normalization is the process of breaking down the data into tables containing the first normal second normal third normal form in the BCNF form. The first normal third normal form in the BCNF form in the BCNF form. The second normal form in the BCNF form in the BCNF form.
