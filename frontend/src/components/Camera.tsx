@@ -1,7 +1,7 @@
 import Webcam from "react-webcam";
 import { forwardRef } from "react";
 
-const Camera = forwardRef<Webcam>((props, ref) => {
+const Camera = forwardRef<Webcam>(({}, ref) => {
 
     return (
 
