@@ -40,7 +40,7 @@ df = pd.DataFrame(
     ],
 )
 
-df.to_csv("backend/ml/interview_dataset.csv", index=False)
+df.to_csv("ml/interview_dataset.csv", index=False)
 
 print("Dataset Generated Successfully!")
 print(df.head())

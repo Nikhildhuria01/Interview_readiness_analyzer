@@ -4,7 +4,7 @@ import json
 def save_results(results):
 
     with open(
-        "backend/interview/interview_results.json",
+        "interview/interview_results.json",
         "w",
         encoding="utf-8"
     ) as f:

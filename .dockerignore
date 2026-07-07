@@ -1,0 +1,108 @@
+# -------------------------
+# Git
+# -------------------------
+.git
+.gitignore
+
+# -------------------------
+# Python
+# -------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual Environments
+ml_env/
+.venv/
+venv/
+env/
+# Other virtual environments
+.venv-1/
+.venv-2/
+.venv312/
+# Python cache
+.pytest_cache/
+.mypy_cache/
+.coverage
+
+
+notebooks/
+tests/
+source/
+# -------------------------
+# VS Code
+# -------------------------
+.vscode/
+
+# -------------------------
+# macOS
+# -------------------------
+.DS_Store
+
+# -------------------------
+# Node
+# -------------------------
+frontend/node_modules/
+frontend/dist/
+npm-debug.log
+
+# -------------------------
+# Build Artifacts
+# -------------------------
+build/
+dist/
+
+# -------------------------
+# MLFlow
+# -------------------------
+mlruns/
+
+# -------------------------
+# Reports
+# -------------------------
+Interview_Report.pdf
+Model_Evaluation_Report.pdf
+
+# -------------------------
+# Logs
+# -------------------------
+*.log
+
+# -------------------------
+# Temporary files
+# -------------------------
+*.tmp
+*.temp
+
+# -------------------------
+# Videos
+# -------------------------
+*.mp4
+*.avi
+*.mov
+*.mkv
+
+# -------------------------
+# Audio
+# -------------------------
+*.wav
+*.pdf
+
+# -------------------------
+# Images
+# -------------------------
+*.png
+*.jpg
+*.jpeg
+
+# -------------------------
+# Notebooks
+# -------------------------
+*.ipynb
+
+# -------------------------
+# Docker
+# -------------------------
+docker-compose.override.yml

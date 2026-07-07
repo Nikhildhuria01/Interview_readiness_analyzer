@@ -1,7 +1,7 @@
-from backend.interview.speech_to_text import generate_transcript
-from backend.interview.advanced_fluency import analyze_advanced_fluency
-from backend.interview.ideal_answer_generator import generate_ideal_answer
-from backend.interview.correctness_analysis import calculate_correctness
+from interview.speech_to_text import generate_transcript
+from interview.advanced_fluency import analyze_advanced_fluency
+from interview.ideal_answer_generator import generate_ideal_answer
+from interview.correctness_analysis import calculate_correctness
 
 
 def analyze_answer(

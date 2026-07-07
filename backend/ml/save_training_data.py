@@ -18,7 +18,7 @@ def save_training_data(
 
 ):
 
-    dataset_path = "backend/ml/real_interview_dataset.csv"
+    dataset_path = "ml/real_interview_dataset.csv"
 
     new_data = pd.DataFrame([{
 

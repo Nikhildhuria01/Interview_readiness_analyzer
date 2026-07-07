@@ -516,7 +516,7 @@ def run_audio_interview():
             time.sleep(0.4)
 
             # ── record answer (camera stays live, REC dot shown) ─────────
-            answer_file = f"backend/interview/answers/answer_{i}.wav"
+            answer_file = f"interview/answers/answer_{i}.wav"
             print(f"Recording answer {i}  ({ANSWER_DURATION}s)…")
 
             with frame_lock:
@@ -531,7 +531,7 @@ def run_audio_interview():
                     {
                         "question": question,
                         "answer_file": answer_file,
-                        "transcript_file": f"backend/interview/transcripts/transcript_{i}.txt",
+                        "transcript_file": f"interview/transcripts/transcript_{i}.txt",
                     }
                 )
 

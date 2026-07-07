@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
-from backend.services.interview_report_generator import (
+from services.interview_report_generator import (
     generate_interview_report,
 )
 

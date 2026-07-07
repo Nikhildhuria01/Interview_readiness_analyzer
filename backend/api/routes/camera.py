@@ -3,10 +3,10 @@ import cv2
 import numpy as np
 import threading
 from fastapi import APIRouter
-from backend.api.schemas.camera import CameraFrame
-from backend.interview.eye_contact_analysis import get_eye_contact_score
-from backend.interview.posture_analysis import get_posture_score
-from backend.interview.head_stability import get_head_stability_score
+from api.schemas.camera import CameraFrame
+from interview.eye_contact_analysis import get_eye_contact_score
+from interview.posture_analysis import get_posture_score
+from interview.head_stability import get_head_stability_score
 router = APIRouter()
 camera_lock = threading.Lock()
 

@@ -1,6 +1,6 @@
 import sys
 from pathlib import Path
-from backend.services.online_question_generator import generate_online_questions
+from services.online_question_generator import generate_online_questions
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
 

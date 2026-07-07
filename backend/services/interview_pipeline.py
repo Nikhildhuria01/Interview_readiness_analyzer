@@ -5,7 +5,7 @@ import pandas as pd
 BASE_DIR = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from backend.services.pdf_parser import extract_text_from_pdf
+from services.pdf_parser import extract_text_from_pdf
 from resume_parser import extract_resume_skills
 from job_parser import extract_job_skills
 from skill_gap import compare_skills

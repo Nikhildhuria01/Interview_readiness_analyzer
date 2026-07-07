@@ -1,9 +1,9 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from backend.services.resume_parser import extract_resume_skills
-from backend.services.job_parser import extract_job_skills
-from backend.services.skill_gap import compare_skills
+from services.resume_parser import extract_resume_skills
+from services.job_parser import extract_job_skills
+from services.skill_gap import compare_skills
 
 router = APIRouter(prefix="/analysis", tags=["Analysis"])
 

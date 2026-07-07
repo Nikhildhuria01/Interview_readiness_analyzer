@@ -9,7 +9,7 @@ from xgboost import XGBRegressor
 # LOAD DATA
 # ==============================
 
-df = pd.read_csv("backend/ml/interview_training_dataset.csv")
+df = pd.read_csv("ml/interview_training_dataset.csv")
 
 X = df[
     [
@@ -68,6 +68,6 @@ print("\nFinal R2 Score:")
 
 print(r2_score(y_test, pred))
 
-joblib.dump(best_model, "backend/ml/readiness_model.pkl")
+joblib.dump(best_model, "ml/readiness_model.pkl")
 
 print("\nOptimized Model Saved!")

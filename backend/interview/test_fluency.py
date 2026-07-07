@@ -3,7 +3,7 @@ from fluency_analysis import (
 )
 
 with open(
-    "backend/interview/transcript.txt",
+    "interview/transcript.txt",
     "r",
     encoding="utf-8"
 ) as f:

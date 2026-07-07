@@ -1,6 +1,6 @@
 import joblib
 
-model = joblib.load("backend/ml/readiness_model.pkl")
+model = joblib.load("ml/readiness_model.pkl")
 
 
 def predict_readiness(fluency, correctness, eye_contact, posture, head_stability):

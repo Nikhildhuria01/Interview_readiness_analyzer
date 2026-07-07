@@ -21,7 +21,7 @@ def generate_report():
 
     with open(
 
-        "backend/interview/interview_results.json",
+        "interview/interview_results.json",
 
         "r",
 

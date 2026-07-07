@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 # ==============================
 
 model = joblib.load(
-    "backend/ml/readiness_model.pkl"
+    "ml/readiness_model.pkl"
 )
 
 # ==============================
@@ -83,7 +83,7 @@ plt.tight_layout()
 
 plt.savefig(
 
-    "backend/ml/feature_importance.png",
+    "ml/feature_importance.png",
 
     dpi=300
 

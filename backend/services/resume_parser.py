@@ -1,5 +1,5 @@
 import re
-from backend.services.skills import TECH_SKILLS
+from services.skills import TECH_SKILLS
 
 def extract_resume_skills(resume_text):
 

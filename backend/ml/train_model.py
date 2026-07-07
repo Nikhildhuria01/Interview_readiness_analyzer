@@ -12,7 +12,7 @@ import joblib
 # LOAD DATASET
 # =====================
 
-df = pd.read_csv("backend/ml/interview_dataset.csv")
+df = pd.read_csv("ml/interview_dataset.csv")
 
 # =====================
 # FEATURES
@@ -70,6 +70,6 @@ print(f"R2 Score: {r2:.4f}")
 # SAVE MODEL
 # =====================
 
-joblib.dump(model, "backend/ml/readiness_model.pkl")
+joblib.dump(model, "ml/readiness_model.pkl")
 
 print("\nModel Saved Successfully!")

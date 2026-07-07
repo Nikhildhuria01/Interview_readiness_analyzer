@@ -9,7 +9,7 @@ from sklearn.model_selection import train_test_split
 # =====================================
 
 df = pd.read_csv(
-    "backend/ml/interview_training_dataset.csv"
+    "ml/interview_training_dataset.csv"
 )
 
 X = df[
@@ -45,7 +45,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 # =====================================
 
 model = joblib.load(
-    "backend/ml/readiness_model.pkl"
+    "ml/readiness_model.pkl"
 )
 
 predictions = model.predict(X_test)
@@ -104,7 +104,7 @@ plt.tight_layout()
 
 plt.savefig(
 
-    "backend/ml/residual_plot.png",
+    "ml/residual_plot.png",
 
     dpi=300
 

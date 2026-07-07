@@ -3,7 +3,7 @@ from advanced_fluency import (
 )
 
 with open(
-    "backend/interview/transcript.txt",
+    "interview/transcript.txt",
     "r",
     encoding="utf-8"
 ) as f:

@@ -7,7 +7,7 @@ ROOT_DIR = Path(__file__).resolve().parents[2]
 if str(ROOT_DIR) not in sys.path:
     sys.path.append(str(ROOT_DIR))
 
-from backend.services.question_recommender import (
+from services.question_recommender import (
     get_existing_skill_questions,
     get_missing_skill_questions,
 )

@@ -12,7 +12,7 @@ import math
 
 import json
 
-with open("backend/ml/model_evaluation.json", "r") as f:
+with open("ml/model_evaluation.json", "r") as f:
 
     evaluation = json.load(f)
 
@@ -99,7 +99,7 @@ story.append(Spacer(1, 20))
 story.append(Paragraph("<b>Feature Importance</b>", styles["Heading2"]))
 
 story.append(
-    Image("backend/ml/feature_importance.png", width=6 * inch, height=4 * inch)
+    Image("ml/feature_importance.png", width=6 * inch, height=4 * inch)
 )
 
 story.append(Spacer(1, 20))
@@ -111,7 +111,7 @@ story.append(Spacer(1, 20))
 story.append(Paragraph("<b>Actual vs Predicted</b>", styles["Heading2"]))
 
 story.append(
-    Image("backend/ml/actual_vs_predicted.png", width=6 * inch, height=6 * inch)
+    Image("ml/actual_vs_predicted.png", width=6 * inch, height=6 * inch)
 )
 
 story.append(Spacer(1, 20))
@@ -122,7 +122,7 @@ story.append(Spacer(1, 20))
 
 story.append(Paragraph("<b>Residual Plot</b>", styles["Heading2"]))
 
-story.append(Image("backend/ml/residual_plot.png", width=6 * inch, height=4 * inch))
+story.append(Image("ml/residual_plot.png", width=6 * inch, height=4 * inch))
 
 story.append(Spacer(1, 20))
 

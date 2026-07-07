@@ -5,12 +5,12 @@ import uuid
 from fastapi import APIRouter, UploadFile, File, Form, HTTPException
 from typing import List
 
-from backend.interview.interview_service import analyze_answer
+from interview.interview_service import analyze_answer
 
 router = APIRouter()
 
 # Temporary folder for uploaded audio
-TEMP_DIR = Path("backend/interview/temp")
+TEMP_DIR = Path("interview/temp")
 TEMP_DIR.mkdir(parents=True, exist_ok=True)
 
 

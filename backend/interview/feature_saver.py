@@ -29,7 +29,7 @@ def save_emotion_features(
 
     with open(
 
-        "backend/interview/emotion_features.json",
+        "interview/emotion_features.json",
 
         "w"
 

@@ -3,9 +3,9 @@ import joblib
 
 from xgboost import XGBRegressor
 
-DATASET = "backend/ml/real_interview_dataset.csv"
+DATASET = "ml/real_interview_dataset.csv"
 
-MODEL_PATH = "backend/ml/readiness_model.pkl"
+MODEL_PATH = "ml/readiness_model.pkl"
 
 
 def retrain_model():

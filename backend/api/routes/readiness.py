@@ -1,12 +1,12 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from backend.ml.predict_readiness import (
+from ml.predict_readiness import (
     predict_readiness,
     get_readiness_status,
 )
 
-from backend.ml.save_training_data import (
+from ml.save_training_data import (
     save_training_data,
 )
 

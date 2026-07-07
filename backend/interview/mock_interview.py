@@ -113,7 +113,7 @@ def run_camera_interview():
     }
 
     with open(
-        "backend/interview/interview_features.json",
+        "interview/interview_features.json",
         "w"
     ) as f:
 

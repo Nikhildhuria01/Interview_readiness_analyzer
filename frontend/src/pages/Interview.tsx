@@ -22,7 +22,7 @@ type Phase = "loading" | "interviewing" | "analyzing" | "complete";
 export default function Interview() {
     const location = useLocation();
     const questions: string[] = location.state?.questions || [];
-    const totalQuestions = questions.length || 10;
+    const totalQuestions = questions.length || 101 ;
 
     const [questionIndex, setQuestionIndex] = useState(0);
     const [timeLeft, setTimeLeft] = useState(QUESTION_DURATION);

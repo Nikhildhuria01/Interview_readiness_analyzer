@@ -52,7 +52,7 @@ df = pd.DataFrame(
     ],
 )
 
-df.to_csv("backend/ml/interview_training_dataset.csv", index=False)
+df.to_csv("ml/interview_training_dataset.csv", index=False)
 
 print(df.head())
 

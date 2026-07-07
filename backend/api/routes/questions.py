@@ -1,9 +1,9 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from backend.services.resume_parser import extract_resume_skills
-from backend.services.job_parser import extract_job_skills
-from backend.interview.question_engine import generate_interview_questions
+from services.resume_parser import extract_resume_skills
+from services.job_parser import extract_job_skills
+from interview.question_engine import generate_interview_questions
 
 router = APIRouter(prefix="/questions", tags=["Questions"])
 

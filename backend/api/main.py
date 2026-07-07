@@ -1,15 +1,15 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from backend.api.routes.resume import router as resume_router
-from backend.api.routes.interview import router as interview_router
-from backend.api.routes.report import router as report_router
-from backend.api.routes.prediction import router as prediction_router
-from backend.api.routes.job import router as job_router
-from backend.api.routes.analysis import router as analysis_router
-from backend.api.routes.questions import router as questions_router
-from backend.api.routes.camera import router as camera_router
-from backend.api.routes.readiness import router as readiness_router
+from api.routes.resume import router as resume_router
+from api.routes.interview import router as interview_router
+from api.routes.report import router as report_router
+from api.routes.prediction import router as prediction_router
+from api.routes.job import router as job_router
+from api.routes.analysis import router as analysis_router
+from api.routes.questions import router as questions_router
+from api.routes.camera import router as camera_router
+from api.routes.readiness import router as readiness_router
 
 app = FastAPI(title="AI Interview Readiness Analyzer", version="1.0")
 

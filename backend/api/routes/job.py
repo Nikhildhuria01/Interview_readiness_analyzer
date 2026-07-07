@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from backend.services.job_parser import extract_job_skills
+from services.job_parser import extract_job_skills
 
 router = APIRouter(prefix="/job", tags=["Job Description"])
 

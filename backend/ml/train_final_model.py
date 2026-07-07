@@ -10,7 +10,7 @@ from xgboost import XGBRegressor
 # LOAD DATASET
 # =====================================
 
-df = pd.read_csv("backend/ml/interview_training_dataset.csv")
+df = pd.read_csv("ml/interview_training_dataset.csv")
 
 # =====================================
 # FEATURES
@@ -91,7 +91,7 @@ evaluation = {
     "best_parameters": model.get_params(),
 }
 
-with open("backend/ml/model_evaluation.json", "w") as f:
+with open("ml/model_evaluation.json", "w") as f:
 
     json.dump(evaluation, f, indent=4)
 
@@ -100,6 +100,6 @@ print("Evaluation JSON Saved!")
 # SAVE MODEL
 # =====================================
 
-joblib.dump(model, "backend/ml/readiness_model.pkl")
+joblib.dump(model, "ml/readiness_model.pkl")
 
 print("\nModel Saved Successfully!")

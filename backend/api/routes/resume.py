@@ -3,8 +3,8 @@ from pydantic import BaseModel
 import tempfile
 import os
 
-from backend.services.resume_parser import extract_resume_skills
-from backend.services.pdf_parser import extract_text_from_pdf
+from services.resume_parser import extract_resume_skills
+from services.pdf_parser import extract_text_from_pdf
 
 router = APIRouter(prefix="/resume", tags=["Resume"])
 
