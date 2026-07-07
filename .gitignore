@@ -7,6 +7,7 @@ __pycache__/
 venv/
 .venv/
 ml_env/
+.venv312/
 
 # ML Models
 *.pkl
@@ -22,6 +23,7 @@ ml_env/
 
 # Logs
 *.log
+*.pdf
 
 # DeepFace Weights
 .deepface/
