@@ -6,6 +6,7 @@ import Webcam from "react-webcam";
 import { analyzeCameraFrame } from "../services/cameraApi";
 import { predictReadiness } from "../services/readinessApi";
 import { downloadInterviewReport } from "../services/reportApi";
+import { useNavigate } from "react-router-dom";
 const QUESTION_DURATION = 60; // seconds per question
 
 type QuestionResult = {
@@ -21,6 +22,7 @@ type Phase = "loading" | "interviewing" | "analyzing" | "complete";
 
 export default function Interview() {
     const location = useLocation();
+    const navigate = useNavigate();
     const questions: string[] = location.state?.questions || [];
     const totalQuestions = questions.length || 101 ;
 
@@ -350,6 +352,11 @@ const handleDownloadReport = async () => {
         link.click();
 
         window.URL.revokeObjectURL(url);
+        await fetch("https://lucid-analysis-production-d0ef.up.railway.app/interview/cleanup", {
+    method: "POST",
+});
+
+navigate("/");
 
     }
 

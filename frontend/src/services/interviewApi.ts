@@ -27,6 +27,9 @@ export const analyzeInterview = async (
     return response.data;
 };
 
+export const endInterview = async () => {
+    return api.post("/interview/end");
+};
 /*
  * New API
  * Sends the complete interview to the backend.

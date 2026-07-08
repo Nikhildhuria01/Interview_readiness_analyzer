@@ -43,3 +43,34 @@ async def analyze_interview(question: str = Form(...), audio: UploadFile = File(
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+import gc
+import os
+from interview import speech_to_text
+
+
+@router.post("/cleanup")
+async def cleanup():
+
+    # Release Whisper model
+    # if hasattr(speech_to_text, "whisper_model"):
+    #   speech_to_text.whisper_model = None
+
+    # Delete temporary interview files
+    temp_files = [
+        "temp_audio.wav",
+        "temp_answer.wav",
+        "temp_video.webm",
+    ]
+
+    for file in temp_files:
+        if os.path.exists(file):
+            try:
+                os.remove(file)
+            except:
+                pass
+
+    gc.collect()
+
+    return {"success": True}
