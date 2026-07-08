@@ -20,11 +20,23 @@ print("Loading Whisper Model Once...")
 # instead, so you actually see what's wrong.
 socket.setdefaulttimeout(60)
 
+from pathlib import Path
+
 try:
-    # device="cpu" forced explicitly: on machines without a CUDA GPU
-    # (e.g. Macs), letting torch auto-detect can behave inconsistently.
     model = whisper.load_model("tiny.en", device="cpu")
     print("Whisper Ready!")
+
+    # ------------------------
+    # Whisper Warmup
+    # ------------------------
+    warmup_audio = Path(__file__).parent / "assets" / "silent.wav"
+
+    print("Running Whisper warmup...")
+
+    model.transcribe(str(warmup_audio))
+
+    print("Whisper warmup complete!")
+
 except socket.timeout:
     raise RuntimeError(
         "Whisper model download timed out after 60s. This usually means "
