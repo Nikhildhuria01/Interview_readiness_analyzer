@@ -24,7 +24,7 @@ export default function Interview() {
     const location = useLocation();
     const navigate = useNavigate();
     const questions: string[] = location.state?.questions || [];
-    const totalQuestions = questions.length || 101 ;
+    const totalQuestions = 5 ;
 
     const [questionIndex, setQuestionIndex] = useState(0);
     const [timeLeft, setTimeLeft] = useState(QUESTION_DURATION);
