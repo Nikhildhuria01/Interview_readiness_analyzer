@@ -23,7 +23,7 @@ socket.setdefaulttimeout(60)
 try:
     # device="cpu" forced explicitly: on machines without a CUDA GPU
     # (e.g. Macs), letting torch auto-detect can behave inconsistently.
-    model = whisper.load_model("base", device="cpu")
+    model = whisper.load_model("tiny.en", device="cpu")
     print("Whisper Ready!")
 except socket.timeout:
     raise RuntimeError(
