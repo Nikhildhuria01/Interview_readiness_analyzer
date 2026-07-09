@@ -142,7 +142,7 @@ if (result.success) {
 
         }
 
-    }, 15000);
+    }, 1000);
 
     return () => clearInterval(interval);
 
