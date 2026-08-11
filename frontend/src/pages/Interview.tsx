@@ -352,7 +352,7 @@ const handleDownloadReport = async () => {
         link.click();
 
         window.URL.revokeObjectURL(url);
-        await fetch("https://lucid-analysis-production-d0ef.up.railway.app/interview/cleanup", {
+        await fetch("https://interview-readiness-analyzer-1.onrender.com/cleanup", {
     method: "POST",
 });
 
